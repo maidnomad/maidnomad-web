@@ -29,3 +29,8 @@ pip_prod:
 runserver:
 	python maidnomadweb/manage.py runserver
 
+migrate:
+	python maidnomadweb/manage.py migrate
+
+createsuperuser:
+	python maidnomadweb/manage.py createsuperuser
