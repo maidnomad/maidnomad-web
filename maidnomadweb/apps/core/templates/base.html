@@ -9,7 +9,11 @@
 	<meta name="description" content="メイドカフェでノマドワークの素晴らしさを世の中に広げる活動をしています。" />
 	<meta property="og:site_name" content="メイドカフェでノマド会公式サイト" />
 	<meta property="og:locale" content="ja" />
+	{% if ogp_type %}
+	<meta property="og:type" content="{{ ogp_type }}" />
+	{% else %}
 	<meta property="og:type" content="article" />
+	{% endif %}
 	<meta property="og:image:width" content="400" />
 	<meta property="og:image:height" content="399" />
 	<meta property="og:image" content="https://www.maid-cafe.work/wp-content/uploads/sites/2/2017/09/Yj_rD8DQ.jpg" />
@@ -141,35 +145,8 @@
 				<nav id="site-navigation" class="navigation main-navigation" role="navigation">
 					<h3 class="menu-toggle">Menu</h3>
 					<a class="screen-reader-text skip-link" href="#content" title="Skip to content">Skip to content</a>
-					<div class="menu-menu-1-container"><ul id="menu-menu-1" class="nav-menu"><li id="menu-item-468" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-468"><a href="https://www.maid-cafe.work/">TopPage</a></li>
-<li id="menu-item-670" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-670"><a href="#">活動</a>
-<ul class="sub-menu">
-	<li id="menu-item-445" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-445"><a target="_blank" rel="noopener" href="https://maid-cafe-nomad.connpass.com">イベント告知・申込み (外部サイト)</a></li>
-	<li id="menu-item-671" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-671"><a target="_blank" rel="noopener" href="https://maid-cafe-nomad.slack.com/">Slack (外部サイト)</a></li>
-</ul>
-</li>
-<li id="menu-item-665" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-665"><a href="#">Information</a>
-<ul class="sub-menu">
-	<li id="menu-item-740" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-740"><a href="https://www.maid-cafe.work/information/for_maidcafe_info">メイドカフェ店舗様向けノマド会のご紹介</a></li>
-	<li id="menu-item-441" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-441"><a href="https://www.maid-cafe.work/information/akihabara_nomad_maid">秋葉原のノマドに最適なメイドカフェ情報</a></li>
-</ul>
-</li>
-<li id="menu-item-662" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children menu-item-662"><a href="#">運営</a>
-<ul class="sub-menu">
-	<li id="menu-item-645" class="menu-item menu-item-type-post_type menu-item-object-page current-page-ancestor current-page-parent menu-item-645"><a href="https://www.maid-cafe.work/organization">運営体制</a></li>
-	<li id="menu-item-661" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-617 current_page_item menu-item-661"><a href="https://www.maid-cafe.work/organization/maid_profile" aria-current="page">メイドさん紹介</a></li>
-	<li id="menu-item-653" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-653"><a href="https://www.maid-cafe.work/organization/organizers_profile">イベントオーガナイザー紹介</a></li>
-</ul>
-</li>
-<li id="menu-item-493" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-493"><a target="_blank" rel="noopener" href="https://photos.app.goo.gl/B94dVMytZ5ypwatq1">Gallery</a></li>
-<li id="menu-item-473" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-473"><a href="https://www.maid-cafe.work/blog">ブログ</a></li>
-</ul></div>					<form role="search" method="get" class="search-form" action="https://www.maid-cafe.work/">
-				<label>
-					<span class="screen-reader-text">検索:</span>
-					<input type="search" class="search-field" placeholder="検索&hellip;" value="" name="s" />
-				</label>
-				<input type="submit" class="search-submit" value="検索" />
-			</form>				</nav><!-- #site-navigation -->
+					{% include "menu.html" %}
+				</nav><!-- #site-navigation -->
 			</div><!-- #navbar -->
 		</header><!-- #masthead -->
 
@@ -183,9 +160,7 @@
 	<div id="tertiary" class="sidebar-container" role="complementary">
 		<div class="sidebar-inner">
 			<div class="widget-area">
-				<aside id="bcn_widget-2" class="widget widget_breadcrumb_navxt">
-					{% include "breadcrumbs.html" %}
-				</aside>
+				{% include "breadcrumbs.html" %}
 				<aside id="text-7" class="widget widget_text"><h3 class="widget-title">twitter</h3>			<div class="textwidget"><a class="twitter-timeline" href="https://twitter.com/maidnomad">Tweets by maidnomad</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></div>
 		</aside><aside id="text-9" class="widget widget_text"><h3 class="widget-title">Facebook</h3>			<div class="textwidget"><div class="fb-page" data-href="https://www.facebook.com/maid.cafe.work/" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/maid.cafe.work/"><a href="https://www.facebook.com/maid.cafe.work/">メイドカフェでノマド最高</a></blockquote></div></div></div>
 		</aside><aside id="text-3" class="widget widget_text"><h3 class="widget-title">おすすめ商品</h3>			<div class="textwidget"><iframe src="//rcm-fe.amazon-adsystem.com/e/cm?t=esuai-22&o=9&p=8&l=as1&asins=B0146I61AO&ref=tf_til&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1=000000&bg1=FFFFFF&f=ifr" style="width:100%;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>

@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     "admin_ordering",
     "reversion",
     "apps.core",
+    "apps.staticpage",
     "apps.maidlist",
 ]
 

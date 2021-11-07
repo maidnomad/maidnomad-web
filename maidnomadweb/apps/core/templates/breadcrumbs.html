@@ -1,4 +1,5 @@
 {% if breadcrumbs %}
+<aside id="bcn_widget-2" class="widget widget_breadcrumb_navxt">
 <div class="breadcrumbs" vocab="https://schema.org/" typeof="BreadcrumbList">
 {% for breadcrumb in breadcrumbs %}
     {% if breadcrumb.url %}
@@ -13,4 +14,5 @@
     {% endif %}
 {% endfor %}
 </div>
+</aside>
 {% endif %}

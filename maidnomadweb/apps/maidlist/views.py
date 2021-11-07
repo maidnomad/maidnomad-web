@@ -24,7 +24,6 @@ def index(request: HttpRequest) -> HttpResponse:
             "order",
         )
     )
-
     return render(
         request,
         "maidlist/index.html",
@@ -32,8 +31,12 @@ def index(request: HttpRequest) -> HttpResponse:
             "canonical_url": settings.SITE_ROOT_URL + reverse("maidlist:index"),
             "breadcrumbs": [
                 {
+                    "text": "TopPage",
+                    "url": reverse("top"),
+                },
+                {
                     "text": "運営体制",
-                    "url": "https://www.maid-cafe.work/organization",
+                    "url": reverse("organization"),
                 },
                 {
                     "text": "メイドさん紹介",
@@ -74,8 +77,12 @@ def detail(request: HttpRequest, code: str) -> HttpResponse:
             "canonical_url": canonical_url,
             "breadcrumbs": [
                 {
+                    "text": "TopPage",
+                    "url": reverse("top"),
+                },
+                {
                     "text": "運営体制",
-                    "url": "https://www.maid-cafe.work/organization",
+                    "url": reverse("organization"),
                 },
                 {
                     "text": "メイドさん紹介",
