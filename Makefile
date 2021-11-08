@@ -1,5 +1,5 @@
 test:
-	pytest tests --cov=functions \
+	pytest tests --cov=maidnomadweb \
 		--cov-report=term-missing \
 		-m "not slow"
 	@printf "\e[32;1mtest ok\e[m\n"
