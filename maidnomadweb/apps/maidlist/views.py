@@ -6,6 +6,7 @@ from markdown import markdown
 
 from .models import MaidProfile
 
+
 def index(request: HttpRequest) -> HttpResponse:
     maid_profiles_list = (
         MaidProfile.objects.only(
@@ -70,8 +71,8 @@ def _to_content_html_safe(content: str) -> str:
 
 
 def _to_detail_image_url(maid_profile: MaidProfile):
-    if maid_profile.thumbnail_image:
-        return maid_profile.thumbnail_image.url
     if maid_profile.main_image:
         return maid_profile.main_image.url
+    if maid_profile.thumbnail_image:
+        return maid_profile.thumbnail_image.url
     return None

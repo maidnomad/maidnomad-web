@@ -13,14 +13,14 @@ class MaidProfileAdmin(OrderableAdmin, VersionAdmin):
             f'<img src="{obj.thumbnail_image.url}" style="height: 120px; width: auto" />'
         )
 
-    thumbnail_image_tag.short_description = "サムネイル画像（プレビュー）"
+    thumbnail_image_tag.short_description = "サムネイル画像（プレビュー）"  # type: ignore
 
     def main_image_tag(self, obj):
         return format_html(
             f'<img src="{obj.main_image.url}" style="height: 270px; width: auto" />'
         )
 
-    main_image_tag.short_description = "メイン画像（プレビュー）"
+    main_image_tag.short_description = "メイン画像（プレビュー）"  # type: ignore
 
     ordering_field = "order"
     fields = [

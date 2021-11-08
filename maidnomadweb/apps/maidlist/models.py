@@ -13,7 +13,7 @@ class MaidProfile(Model):
     name = CharField("名前", max_length=128)
     content = TextField("自己紹介", blank=True)
     thumbnail_image = ImageField(
-        "サムネイル画像", upload_to="maidlist_thubnail/", null=True, blank=True
+        "サムネイル画像", upload_to="maidlist_thumbnail/", null=True, blank=True
     )
     main_image = ImageField("メイン画像", upload_to="maidlist_main/", null=True, blank=True)
 
