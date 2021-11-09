@@ -26,6 +26,9 @@ pip:
 runserver:
 	python maidnomadweb/manage.py runserver
 
+makemigrations:
+	python maidnomadweb/manage.py makemigrations
+
 migrate:
 	python maidnomadweb/manage.py migrate
 
