@@ -20,11 +20,8 @@ lint:
 	mypy maidnomadweb tests
 	@printf "\e[32;1mlint ok\e[m\n"
 
-pip_dev:
+pip:
 	pip install -r requirements_dev.txt -c requirements.lock
-
-pip_prod:
-	pip install -r requirements.txt -c requirements.lock
 
 runserver:
 	python maidnomadweb/manage.py runserver
