@@ -13,6 +13,18 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 from os import environ
 
+
+def env_bool(name):
+    return environ.get(name) == "True"
+
+
+def env_str_list(name):
+    envval = environ.get(name)
+    if not envval:
+        return []
+    return envval.split(",")
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,9 +36,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = environ.get("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env_bool("DJANGO_DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env_str_list("DJANGO_ALLOWED_HOSTS")
 
 
 # Application definition
