@@ -1,7 +1,9 @@
 import bleach
 from bleach_allowlist import markdown_tags
+from django.conf import settings
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
 from markdown import markdown
 
 from .models import MaidProfile
@@ -27,6 +29,16 @@ def index(request: HttpRequest) -> HttpResponse:
         request,
         "maidlist/index.html",
         {
+            "canonical_url": settings.SITE_ROOT_URL + reverse("index"),
+            "breadcrumbs": [
+                {
+                    "text": "運営体制",
+                    "url": "https://www.maid-cafe.work/organization",
+                },
+                {
+                    "text": "メイドさん紹介",
+                },
+            ],
             "maid_list": _to_maid_list(maid_profiles_list),
         },
     )
@@ -52,10 +64,25 @@ def detail(request: HttpRequest, code: str) -> HttpResponse:
     if not maid_profile.visible:
         raise Http404()
 
+    canonical_url = settings.SITE_ROOT_URL + reverse("detail", kwargs={"code": code})
     return render(
         request,
         "maidlist/detail.html",
         {
+            "canonical_url": canonical_url,
+            "breadcrumbs": [
+                {
+                    "text": "運営体制",
+                    "url": "https://www.maid-cafe.work/organization",
+                },
+                {
+                    "text": "メイドさん紹介",
+                    "url": reverse("index"),
+                },
+                {
+                    "text": maid_profile.name,
+                },
+            ],
             "maid_profile": maid_profile,
             "image_url": _to_detail_image_url(maid_profile),
             "content": _to_content_html_safe(maid_profile.content),

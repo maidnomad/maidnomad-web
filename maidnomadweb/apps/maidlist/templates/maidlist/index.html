@@ -1,7 +1,20 @@
 {% extends "base.html" %}
 {% load static %}
-{% block content %}
 
+{% block headtag_information %}
+	<title>メイドさん紹介 | メイドカフェでノマド会公式サイト公式サイト</title>
+	<meta name="description" content="メイドカフェでノマド会所属のメイドさんを紹介します。" />
+	<meta property="og:site_name" content="メイドカフェでノマド会公式サイト" />
+	<meta property="og:locale" content="ja" />
+	<meta property="og:type" content="article" />
+	<meta property="og:image:width" content="400" />
+	<meta property="og:image:height" content="399" />
+	<meta property="og:image" content="https://www.maid-cafe.work/wp-content/uploads/sites/2/2017/09/Yj_rD8DQ.jpg" />
+	<meta property="og:title" content="メイドカフェでノマド会公式サイト公式サイト" />
+	<meta property="og:description" content="メイドカフェでノマドワークの素晴らしさを世の中に広げる活動をしています。" />
+{% endblock %}
+
+{% block content %}
 <article id="maidlist-index" class="page type-page status-publish has-post-thumbnail hentry">
     <header class="entry-header">
         <div class="entry-thumbnail">

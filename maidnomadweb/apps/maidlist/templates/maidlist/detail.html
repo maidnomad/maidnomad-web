@@ -1,7 +1,19 @@
 {% extends "base.html" %}
 {% load static %}
-{% block content %}
 
+{% block headtag_information %}
+	<title>{{ maid_profile.name }} | メイドカフェでノマド会公式サイト公式サイト</title>
+	<meta name="description" content="メイドカフェでノマド会所属メイド {{ maid_profile.name }} さんを紹介します。" />
+	<meta property="og:site_name" content="メイドカフェでノマド会公式サイト" />
+	<meta property="og:locale" content="ja" />
+	<meta property="og:type" content="article" />
+    {% if image_url %}
+	<meta property="og:image" content="{{ image_url }}" />
+    {% endif %}
+	<meta property="og:title" content="{{ maid_profile.name }}" />
+{% endblock %}
+
+{% block content %}
 <style>
     h2 {
         font-size: 1em;

@@ -40,6 +40,7 @@ SECRET_KEY = environ.get("DJANGO_SECRET_KEY")
 DEBUG = env_bool("DJANGO_DEBUG")
 
 ALLOWED_HOSTS = env_str_list("DJANGO_ALLOWED_HOSTS")
+SITE_ROOT_URL = environ.get("SITE_ROOT_URL")
 
 # Application definition
 
