@@ -1,0 +1,39 @@
+- hosts: server
+  become: no
+
+  handlers:
+    - name: restart gunicorn-maidnomadweb
+      command:
+        cmd: sudo /srv/maidnomadweb/restart.sh
+      notify: migrate
+    - name: migrate
+      command:
+        cmd: /srv/maidnomadweb/venv/bin/python3.10 maidnomadweb/manage.py migrate
+        chdir: /srv/maidnomadweb/maidnomadweb
+      environment:
+        DJANGO_SECRET_KEY: dummy
+  tasks:  
+    - name: make virtualenv
+      command:
+        cmd: python3.10 -m venv venv
+        creates: venv
+        chdir: /srv/maidnomadweb
+
+    - name: pip install gunicorn
+      pip:
+        name: gunicorn==20.1
+        virtualenv_command: -m venv
+        virtualenv: /srv/maidnomadweb/venv/
+
+    - name: git pull main branch
+      git:
+        repo: https://github.com/maidnomad/maidnomad-web.git
+        dest: /srv/maidnomadweb/maidnomadweb
+      notify: restart gunicorn-maidnomadweb
+
+    - name: pip install libraries
+      pip:
+        requirements: /srv/maidnomadweb/maidnomadweb/requirements.txt
+        virtualenv_command: -m venv
+        virtualenv: /srv/maidnomadweb/venv/
+  

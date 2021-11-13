@@ -1,0 +1,5 @@
+[server]
+# 1. あらかじめホスト管理者に公開鍵を送ってください
+# 2. このファイルをコピーして hosts としてください
+# 3. 管理者から受け取った情報をもとに以下のようなサーバー情報を記入してください
+# server.example.com:22  ansible_ssh_user=username  ansible_python_interpreter=/usr/bin/python3
