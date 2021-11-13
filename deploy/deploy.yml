@@ -39,3 +39,16 @@
         requirements: /srv/maidnomadweb/maidnomadweb/requirements.txt
         virtualenv_command: -m venv
         virtualenv: /srv/maidnomadweb/venv/
+
+    - name: set db directory group
+      file:
+        path: /srv/maidnomadweb/maidnomadweb/maidnomadweb
+        state: directory
+        owner: maidnomadweb
+        group: www-data
+    - name: set db file group
+      file:
+        path: /srv/maidnomadweb/maidnomadweb/maidnomadweb/db.sqlite3
+        state: file
+        owner: maidnomadweb
+        group: www-data
