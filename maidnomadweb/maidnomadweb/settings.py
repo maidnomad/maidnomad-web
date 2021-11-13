@@ -10,8 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-from pathlib import Path
 from os import environ
+from pathlib import Path
 
 
 def env_bool(name):
@@ -137,3 +137,42 @@ STATIC_ROOT = "static/"
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# Logging
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "standard": {
+            "format": ("%(levelname)s [%(asctime)s] %(name)s %(message)s"),
+        },
+    },
+    "handlers": {
+        "console": {
+            "level": environ.get("DJANGO_LOG_LEVEL", "DEBUG"),
+            "class": "logging.StreamHandler",
+            "formatter": "standard",
+        }
+    },
+    "loggers": {
+        "": {
+            "handlers": ["console"],
+            "level": "NOTSET",
+            "propagate": False,
+        },
+        "django": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": False,
+        },
+    },
+}
+
+if env_bool("DJANGO_DEBUG_SQL"):
+    # DBに発行するSQLログを出力
+    LOGGING["loggers"]["django.db.backends"] = {
+        "handlers": ["console"],
+        "level": "DEBUG",
+        "propagate": False,
+    }
