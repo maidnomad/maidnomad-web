@@ -5,11 +5,14 @@
     - name: restart gunicorn-maidnomadweb
       command:
         cmd: sudo /srv/maidnomadweb/restart.sh
-      notify: migrate
-    - name: migrate
+      notify: migrate collectstatic
+    - name: migrate collectstatic
       command:
-        cmd: /srv/maidnomadweb/venv/bin/python3.10 maidnomadweb/manage.py migrate
+        cmd: /srv/maidnomadweb/venv/bin/python3.10 maidnomadweb/manage.py {{ item }}
         chdir: /srv/maidnomadweb/maidnomadweb
+      with_items:
+        - migrate
+        - collectstatic --noinput --clear
       environment:
         DJANGO_SECRET_KEY: dummy
   tasks:  
@@ -36,4 +39,3 @@
         requirements: /srv/maidnomadweb/maidnomadweb/requirements.txt
         virtualenv_command: -m venv
         virtualenv: /srv/maidnomadweb/venv/
-  
