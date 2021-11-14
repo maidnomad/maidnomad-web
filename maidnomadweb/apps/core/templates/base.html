@@ -5,8 +5,11 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width">
 	{% block headtag_information %}
+	{% if title %}
+	<title>{{ title }} | {{ SITE_ROOT_TITLE }}</title>
+	{% else %}
 	<title>{{ SITE_ROOT_TITLE }}</title>
-	<meta name="description" content="{{ SITE_ROOT_DESCRIPTION }}" />
+	{% endif %}
 	<meta property="og:site_name" content="{{ SITE_ROOT_TITLE }}" />
 	<meta property="og:locale" content="ja" />
 	{% if ogp_type %}
@@ -17,8 +20,20 @@
 	<meta property="og:image:width" content="400" />
 	<meta property="og:image:height" content="399" />
 	<meta property="og:image" content="https://www.maid-cafe.work/wp-content/uploads/sites/2/2017/09/Yj_rD8DQ.jpg" />
+	{% if ogp_title %}
+	<meta property="og:title" content="{{ ogp_title }}" />
+	{% elif title %}
+	<meta property="og:title" content="{{ title }}" />
+	{% else %}
 	<meta property="og:title" content="{{ SITE_ROOT_TITLE }}" />
+	{% endif %}
+	{% if description %}
+	<meta name="description" content="{{ description }}" />
+	<meta property="og:description" content="{{ description }}" />
+	{% else %}
+	<meta name="description" content="{{ SITE_ROOT_DESCRIPTION }}" />
 	<meta property="og:description" content="{{ SITE_ROOT_DESCRIPTION }}" />
+	{% endif %}
 	{% endblock %}
 	{% if canonical_url %}
 	<link rel="canonical" href="{{ canonical_url }}" />

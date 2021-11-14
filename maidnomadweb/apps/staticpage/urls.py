@@ -1,7 +1,6 @@
+from apps.staticpage import views
 from django.shortcuts import redirect
 from django.urls import path, reverse
-
-from . import views
 
 urlpatterns = [
     path("", views.staticpage("top"), name="top"),

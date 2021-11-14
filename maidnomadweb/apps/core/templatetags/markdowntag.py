@@ -1,7 +1,5 @@
 from textwrap import dedent
 
-import bleach
-from bleach_allowlist import markdown_tags
 from django import template
 from markdown import markdown
 
@@ -10,6 +8,13 @@ register = template.Library()
 
 @register.tag(name="markdown")
 def do_markdown(parser, token):
+    """マークダウンタグ
+
+    テンプレートの {% markdown %} 〜 {% endmarkdown %} の間に書かれた内容を
+    MarkDownとして解釈し、HTMLに変換してレンダリングします。
+
+    サニタイズは行いません。（テンプレートを書く人は自由にスクリプトが書けるため）
+    """
     nodelist = parser.parse(("endmarkdown",))
     parser.delete_first_token()
     return MarkdownNode(nodelist)

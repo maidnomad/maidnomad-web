@@ -41,7 +41,7 @@ DEBUG = env_bool("DJANGO_DEBUG")
 
 ALLOWED_HOSTS = env_str_list("DJANGO_ALLOWED_HOSTS")
 SITE_ROOT_URL = environ.get("SITE_ROOT_URL")
-SITE_ROOT_TITLE = "メイドカフェでノマド会公式サイト公式サイト"
+SITE_ROOT_TITLE = "メイドカフェでノマド会公式サイト"
 SITE_ROOT_DESCRIPTION = "メイドカフェでノマドワークの素晴らしさを世の中に広げる活動をしています。"
 SITE_ADSENSE_TRACKING_ID = environ.get("SITE_ADSENSE_TRACKING_ID")
 SITE_ADSENSE_CLIENT = environ.get("SITE_ADSENSE_CLIENT")
@@ -91,7 +91,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "apps.core.context_processors.site_common_variables",
             ],
-            "builtins": ["apps.core.templatetags.markdown"],
+            "builtins": ["apps.core.templatetags.markdowntag"],
         },
     },
 ]
