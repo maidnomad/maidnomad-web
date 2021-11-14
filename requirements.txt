@@ -1,2 +1,4 @@
 django
+django-storages
 python-dotenv
+boto3

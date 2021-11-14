@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -132,6 +133,20 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = "static/"
+
+# AWS Storage
+AWS_S3_ACCESS_KEY_ID = environ.get("AWS_S3_ACCESS_KEY_ID")
+AWS_S3_SECRET_ACCESS_KEY = environ.get("AWS_S3_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = environ.get("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_CUSTOM_DOMAIN = environ.get("AWS_S3_CUSTOM_DOMAIN")
+AWS_LOCATION = "static"
+
+if AWS_S3_ACCESS_KEY_ID and AWS_S3_SECRET_ACCESS_KEY:
+    STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+    # AWS の設定をしたら、storageをS3に切り替える
+    STATICFILES_STORAGE = "storages.backends.s3boto3.S3StaticStorage"
+    DEFAULT_FILE_STORAGE = "apps.core.backends.MediaStorage"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
