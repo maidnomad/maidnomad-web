@@ -28,3 +28,4 @@ jobs:
           make test
         env:
           DJANGO_SECRET_KEY: dummy
+          SITE_ROOT_URL: ""
