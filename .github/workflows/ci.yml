@@ -26,3 +26,5 @@ jobs:
         run: |
           make lint
           make test
+        env:
+          DJANGO_SECRET_KEY: dummy
