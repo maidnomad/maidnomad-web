@@ -2,9 +2,9 @@
 {% load static %}
 
 {% block headtag_information %}
-	<title>{{ maid_profile.name }} | メイドカフェでノマド会公式サイト公式サイト</title>
+	<title>{{ maid_profile.name }} | {{ SITE_ROOT_TITLE }}</title>
 	<meta name="description" content="メイドカフェでノマド会所属メイド {{ maid_profile.name }} さんを紹介します。" />
-	<meta property="og:site_name" content="メイドカフェでノマド会公式サイト" />
+	<meta property="og:site_name" content="{{ SITE_ROOT_TITLE }}" />
 	<meta property="og:locale" content="ja" />
 	<meta property="og:type" content="article" />
     {% if image_url %}
@@ -73,10 +73,8 @@
     </div>
 </div>
 <br class='wp_social_bookmarking_light_clear' />
+{% include "adsense_box.html" %}
                             </div><!-- .entry-content -->
-
-    <footer class="entry-meta">
-                            </footer><!-- .entry-meta -->
 </article><!-- #post -->
 
 {% endblock %}

@@ -2,16 +2,16 @@
 {% load static %}
 
 {% block headtag_information %}
-	<title>メイドさん紹介 | メイドカフェでノマド会公式サイト公式サイト</title>
+	<title>メイドさん紹介 | {{ SITE_ROOT_TITLE }}</title>
 	<meta name="description" content="メイドカフェでノマド会所属のメイドさんを紹介します。" />
-	<meta property="og:site_name" content="メイドカフェでノマド会公式サイト" />
+	<meta property="og:site_name" content="{{ SITE_ROOT_TITLE }}" />
 	<meta property="og:locale" content="ja" />
 	<meta property="og:type" content="article" />
 	<meta property="og:image:width" content="400" />
 	<meta property="og:image:height" content="399" />
 	<meta property="og:image" content="https://www.maid-cafe.work/wp-content/uploads/sites/2/2017/09/Yj_rD8DQ.jpg" />
-	<meta property="og:title" content="メイドカフェでノマド会公式サイト公式サイト" />
-	<meta property="og:description" content="メイドカフェでノマドワークの素晴らしさを世の中に広げる活動をしています。" />
+	<meta property="og:title" content="{{ SITE_ROOT_TITLE }}" />
+	<meta property="og:description" content="{{ SITE_ROOT_DESCRIPTION }}" />
 {% endblock %}
 
 {% block content %}
@@ -43,8 +43,10 @@
     メイドカフェでノマド会でメイドさんをしてみたい方は、こちらのフォームよりご応募ください。
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSegvKIC5PzQsVH0Fanb9L8ipdoZdk1wCj8osLsf1ch4XdVaqw/viewform?usp=fb_send_twt">メイドカフェでノマド会メイドさん応募フォーム</a>
 </p>
-<div class='wp_social_bookmarking_light'>        <div class="wsbl_hatena_button"><a href="//b.hatena.ne.jp/entry/https://www.maid-cafe.work/organization/maid_profile" class="hatena-bookmark-button" data-hatena-bookmark-title="メイドさん紹介" data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"> <img src="//b.hatena.ne.jp/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="//b.hatena.ne.jp/js/bookmark_button.js" charset="utf-8" async="async"></script></div>        <div class="wsbl_facebook_like"><div id="fb-root"></div><fb:like href="https://www.maid-cafe.work/organization/maid_profile" layout="button_count" action="like" width="100" share="false" show_faces="false" ></fb:like></div>        <div class="wsbl_twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-url="https://www.maid-cafe.work/organization/maid_profile" data-text="メイドさん紹介" data-lang="en">Tweet</a></div></div>
-<br class='wp_social_bookmarking_light_clear' />
+
+{% include "socialbuttons.html" with title="メイドさん紹介" %}
+{% include "adsense_box.html" %}
+
     </div><!-- .entry-content -->
 </article><!-- #post -->
 
