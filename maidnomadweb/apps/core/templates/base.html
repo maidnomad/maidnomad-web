@@ -5,9 +5,9 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width">
 	{% block headtag_information %}
-	<title>メイドカフェでノマド会公式サイト公式サイト</title>
-	<meta name="description" content="メイドカフェでノマドワークの素晴らしさを世の中に広げる活動をしています。" />
-	<meta property="og:site_name" content="メイドカフェでノマド会公式サイト" />
+	<title>{{ SITE_ROOT_TITLE }}</title>
+	<meta name="description" content="{{ SITE_ROOT_DESCRIPTION }}" />
+	<meta property="og:site_name" content="{{ SITE_ROOT_TITLE }}" />
 	<meta property="og:locale" content="ja" />
 	{% if ogp_type %}
 	<meta property="og:type" content="{{ ogp_type }}" />
@@ -17,8 +17,8 @@
 	<meta property="og:image:width" content="400" />
 	<meta property="og:image:height" content="399" />
 	<meta property="og:image" content="https://www.maid-cafe.work/wp-content/uploads/sites/2/2017/09/Yj_rD8DQ.jpg" />
-	<meta property="og:title" content="メイドカフェでノマド会公式サイト公式サイト" />
-	<meta property="og:description" content="メイドカフェでノマドワークの素晴らしさを世の中に広げる活動をしています。" />
+	<meta property="og:title" content="{{ SITE_ROOT_TITLE }}" />
+	<meta property="og:description" content="{{ SITE_ROOT_DESCRIPTION }}" />
 	{% endblock %}
 	{% if canonical_url %}
 	<link rel="canonical" href="{{ canonical_url }}" />
@@ -136,9 +136,9 @@
 <body class="page-template-default page page-parent page-child single-author sidebar">
 	<div id="page" class="hfeed site">
 		<header id="masthead" class="site-header" role="banner">
-			<a class="home-link" href="https://www.maid-cafe.work/" title="メイドカフェでノマド会公式サイト" rel="home">
-				<h1 class="site-title">メイドカフェでノマド会公式サイト</h1>
-				<h2 class="site-description">メイドカフェは最高のノマド環境であることを広げる活動をしています</h2>
+			<a class="home-link" href="https://www.maid-cafe.work/" title="{{ SITE_ROOT_TITLE }}" rel="home">
+				<h1 class="site-title">{{ SITE_ROOT_TITLE }}</h1>
+				<h2 class="site-description">{{ SITE_ROOT_DESCRIPTION }}</h2>
 			</a>
 
 			<div id="navbar" class="navbar">
@@ -163,21 +163,16 @@
 				{% include "breadcrumbs.html" %}
 				<aside id="text-7" class="widget widget_text"><h3 class="widget-title">twitter</h3>			<div class="textwidget"><a class="twitter-timeline" href="https://twitter.com/maidnomad">Tweets by maidnomad</a> <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script></div>
 		</aside><aside id="text-9" class="widget widget_text"><h3 class="widget-title">Facebook</h3>			<div class="textwidget"><div class="fb-page" data-href="https://www.facebook.com/maid.cafe.work/" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/maid.cafe.work/"><a href="https://www.facebook.com/maid.cafe.work/">メイドカフェでノマド最高</a></blockquote></div></div></div>
-		</aside><aside id="text-3" class="widget widget_text"><h3 class="widget-title">おすすめ商品</h3>			<div class="textwidget"><iframe src="//rcm-fe.amazon-adsystem.com/e/cm?t=esuai-22&o=9&p=8&l=as1&asins=B0146I61AO&ref=tf_til&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1=000000&bg1=FFFFFF&f=ifr" style="width:100%;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+		</aside><aside id="text-3" class="widget widget_text"><h3 class="widget-title">おすすめ商品</h3>			<div class="textwidget"><iframe src="//rcm-fe.amazon-adsystem.com/e/cm?t={{ SITE_AMAZON_ASSOCIATE_TRACKING_ID }}&o=9&p=8&l=as1&asins=B0146I61AO&ref=tf_til&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1=000000&bg1=FFFFFF&f=ifr" style="width:100%;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
 
-<iframe src="//rcm-fe.amazon-adsystem.com/e/cm?t=esuai-22&o=9&p=8&l=as1&asins=4047291188&ref=tf_til&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1=000000&bg1=FFFFFF&f=ifr" style="width:100%;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
+<iframe src="//rcm-fe.amazon-adsystem.com/e/cm?t={{ SITE_AMAZON_ASSOCIATE_TRACKING_ID }}&o=9&p=8&l=as1&asins=4047291188&ref=tf_til&fc1=000000&IS2=1&lt1=_blank&m=amazon&lc1=0000FF&bc1=000000&bg1=FFFFFF&f=ifr" style="width:100%;height:240px;" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe>
 </div>
 		</aside><aside id="text-5" class="widget widget_text"><h3 class="widget-title">広告</h3>			<div class="textwidget"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- maid-cafe.work横 -->
-<ins class="adsbygoogle"
-     style="display:inline-block;width:160px;height:600px"
-     data-ad-client="ca-pub-4600091038664361"
-     data-ad-slot="7441744134"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+
+{% include "adsense_side.html" %}
+
 <br />
-<iframe src="//rcm-fe.amazon-adsystem.com/e/cm?t=esuai-22&o=9&p=12&l=ez&f=ifr&f=ifr" scrolling="no" marginwidth="0" marginheight="0" border="0" frameborder="0" style="border:none;"></iframe></div>
+<iframe src="//rcm-fe.amazon-adsystem.com/e/cm?t={{ SITE_AMAZON_ASSOCIATE_TRACKING_ID }}&o=9&p=12&l=ez&f=ifr&f=ifr" scrolling="no" marginwidth="0" marginheight="0" border="0" frameborder="0" style="border:none;"></iframe></div>
 		</aside>			</div><!-- .widget-area -->
 		</div><!-- .sidebar-inner -->
 	</div><!-- #tertiary -->
@@ -191,7 +186,7 @@
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-71655717-1', 'auto');
+  ga('create', '{{ SITE_ADSENSE_TRACKING_ID }}', 'auto');
   ga('send', 'pageview');
 
 </script>

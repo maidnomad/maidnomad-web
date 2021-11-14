@@ -1,0 +1,20 @@
+{% if canonical_url %}{# canonical が設定されていないページはソーシャルブックマークできないこととする #}
+<div class='wp_social_bookmarking_light'>
+    <div class="wsbl_hatena_button"><a href="//b.hatena.ne.jp/entry/{{ canonical_url }}"
+            class="hatena-bookmark-button" data-hatena-bookmark-title="{{ title }}"
+            data-hatena-bookmark-layout="simple-balloon" title="このエントリーをはてなブックマークに追加"> <img
+                src="//b.hatena.ne.jp/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加"
+                width="20" height="20" style="border: none;" /></a>
+        <script type="text/javascript" src="//b.hatena.ne.jp/js/bookmark_button.js" charset="utf-8"
+            async="async"></script>
+    </div>
+    <div class="wsbl_facebook_like">
+        <div id="fb-root"></div>
+        <fb:like href="{{ canonical_url }}" layout="button_count" action="like" width="100"
+            share="false" show_faces="false"></fb:like>
+    </div>
+    <div class="wsbl_twitter"><a href="https://twitter.com/share" class="twitter-share-button"
+            data-url="{{ canonical_url }}" data-text="{{ title }}" data-lang="en">Tweet</a></div>
+</div>
+<br class='wp_social_bookmarking_light_clear' />
+{% endif %}

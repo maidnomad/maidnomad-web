@@ -1,0 +1,10 @@
+{# Google Adsense 記事下ボックス広告 #}
+
+{% if SITE_ADSENSE_CLIENT and SITE_ADSENSE_SLOT_BOX %}
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px"
+    data-ad-client="{{ SITE_ADSENSE_CLIENT }}" data-ad-slot="{{ SITE_ADSENSE_SLOT_BOX }}"></ins>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+{% endif %}

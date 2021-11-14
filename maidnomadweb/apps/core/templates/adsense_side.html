@@ -1,0 +1,11 @@
+{# Google Adsense サイド広告 #}
+
+{% if SITE_ADSENSE_CLIENT and SITE_ADSENSE_SLOT_SIDE %}
+<ins class="adsbygoogle"
+     style="display:inline-block;width:160px;height:600px"
+     data-ad-client="{{ SITE_ADSENSE_CLIENT }}"
+     data-ad-slot="{{ SITE_ADSENSE_SLOT_SIDE }}"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+{% endif %}
