@@ -1,23 +1,6 @@
 - hosts: server
   become: no
 
-  handlers:
-    - name: restart gunicorn-maidnomadweb
-      command:
-        cmd: sudo /srv/maidnomadweb/restart.sh
-      notify: migrate collectstatic
-    - name: migrate collectstatic
-      command:
-        cmd: /srv/maidnomadweb/venv/bin/python3.10 maidnomadweb/manage.py {{ item }}
-        chdir: /srv/maidnomadweb/maidnomadweb
-      with_items:
-        - migrate
-        - collectstatic --noinput --clear
-      environment:
-        DJANGO_SECRET_KEY: dummy
-        AWS_S3_ACCESS_KEY_ID: {{ TODO: ここにクレデンシャルを入れてから実行する }}
-        AWS_S3_SECRET_ACCESS_KEY: {{ TODO: ここにクレデンシャルを入れてから実行する }}
-        AWS_STORAGE_BUCKET_NAME:  {{ TODO: ここにバケット名を入れてから実行する }}
   tasks:  
     - name: make virtualenv
       command:
@@ -35,7 +18,6 @@
       git:
         repo: https://github.com/maidnomad/maidnomad-web.git
         dest: /srv/maidnomadweb/maidnomadweb
-      notify: restart gunicorn-maidnomadweb
 
     - name: pip install libraries
       pip:
@@ -55,6 +37,20 @@
         state: file
         owner: maidnomadweb
         group: www-data
-    # - name: always notify
-    #   command: /bin/true
-    #   notify: restart gunicorn-maidnomadweb
+
+    - name: restart gunicorn-maidnomadweb
+      command:
+        cmd: sudo /srv/maidnomadweb/restart.sh
+
+    - name: migrate collectstatic
+      command:
+        cmd: /srv/maidnomadweb/venv/bin/python3.10 maidnomadweb/manage.py {{ item }}
+        chdir: /srv/maidnomadweb/maidnomadweb
+      with_items:
+        - migrate
+        - collectstatic --noinput --clear
+      environment:
+        DJANGO_SECRET_KEY: dummy
+        AWS_S3_ACCESS_KEY_ID: "{{ lookup('env', 'AWS_S3_ACCESS_KEY_ID') }}"
+        AWS_S3_SECRET_ACCESS_KEY: "{{ lookup('env', 'AWS_S3_SECRET_ACCESS_KEY') }}"
+        AWS_STORAGE_BUCKET_NAME: "{{ lookup('env', 'AWS_STORAGE_BUCKET_NAME') }}"

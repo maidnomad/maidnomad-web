@@ -1,0 +1,31 @@
+name: deploy
+
+on:
+  workflow_run:
+    # ci が成功した時だけDeployする
+    workflows:
+      - ci
+    branches:
+      - main
+    types: 
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run ansible playbook
+      env:
+        PRIVATE_KEY: ${{ secrets.SSH_SECRET_KEY }}
+        HOSTS_FILE: ${{ secrets.ANSIBLE_HOSTSFILE_PRODUCTION }}
+        AWS_S3_ACCESS_KEY_ID: ${{ secrets.AWS_S3_ACCESS_KEY_ID }}
+        AWS_S3_SECRET_ACCESS_KEY: ${{ secrets.AWS_S3_SECRET_ACCESS_KEY }}
+        AWS_STORAGE_BUCKET_NAME: ${{ secrets.AWS_STORAGE_BUCKET_NAME }}
+      run: |
+        mkdir -p ~/.ssh
+        echo "$PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+        chmod 400 ~/.ssh/id_rsa
+        cd deploy
+        echo "$HOSTS_FILE" | tr -d '\r' > hosts
+        ansible-playbook -i hosts deploy.yml
