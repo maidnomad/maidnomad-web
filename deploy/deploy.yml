@@ -6,46 +6,46 @@
       command:
         cmd: python3.10 -m venv venv
         creates: venv
-        chdir: /srv/{{ platformname }}
+        chdir: "/srv/{{ platformname }}"
 
     - name: pip install gunicorn
       pip:
         name: gunicorn==20.1
         virtualenv_command: -m venv
-        virtualenv: /srv/{{ platformname }}/venv/
+        virtualenv: "/srv/{{ platformname }}/venv/"
 
     - name: git pull main branch
       git:
         repo: https://github.com/maidnomad/maidnomad-web.git
-        dest: /srv/{{ platformname }}/maidnomadweb
+        dest: "/srv/{{ platformname }}/maidnomadweb"
 
     - name: pip install libraries
       pip:
-        requirements: /srv/{{ platformname }}/maidnomadweb/requirements.txt
+        requirements: "/srv/{{ platformname }}/maidnomadweb/requirements.txt"
         virtualenv_command: -m venv
-        virtualenv: /srv/{{ platformname }}/venv/
+        virtualenv: "/srv/{{ platformname }}/venv/"
 
     - name: set db directory group
       file:
-        path: /srv/{{ platformname }}/maidnomadweb/maidnomadweb
+        path: "/srv/{{ platformname }}/maidnomadweb/maidnomadweb"
         state: directory
-        owner: {{ platformname }}
+        owner: "{{ platformname }}"
         group: www-data
     - name: set db file group
       file:
-        path: /srv/{{ platformname }}/maidnomadweb/maidnomadweb/db.sqlite3
+        path: "/srv/{{ platformname }}/maidnomadweb/maidnomadweb/db.sqlite3"
         state: file
-        owner: {{ platformname }}
+        owner: "{{ platformname }}"
         group: www-data
 
     - name: restart gunicorn
       command:
-        cmd: sudo /srv/{{ platformname }}/restart.sh
+        cmd: "sudo /srv/{{ platformname }}/restart.sh"
 
     - name: migrate collectstatic
       command:
-        cmd: /srv/{{ platformname }}/venv/bin/python3.10 maidnomadweb/manage.py {{ item }}
-        chdir: /srv/{{ platformname }}/maidnomadweb
+        cmd: "/srv/{{ platformname }}/venv/bin/python3.10 maidnomadweb/manage.py {{ item }}"
+        chdir: "/srv/{{ platformname }}/maidnomadweb"
       with_items:
         - migrate
         - collectstatic --noinput --clear
