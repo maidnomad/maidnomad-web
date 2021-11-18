@@ -32,12 +32,6 @@
         state: directory
         owner: "{{ platformname }}"
         group: www-data
-    - name: set db file group
-      file:
-        path: "/srv/{{ platformname }}/maidnomadweb/maidnomadweb/db.sqlite3"
-        state: file
-        owner: "{{ platformname }}"
-        group: www-data
 
     - name: restart gunicorn
       command:
@@ -55,3 +49,10 @@
         AWS_S3_ACCESS_KEY_ID: "{{ AWS_S3_ACCESS_KEY_ID }}"
         AWS_S3_SECRET_ACCESS_KEY: "{{ AWS_S3_SECRET_ACCESS_KEY }}"
         AWS_STORAGE_BUCKET_NAME: "{{ AWS_STORAGE_BUCKET_NAME }}"
+
+    - name: set db file group
+      file:
+        path: "/srv/{{ platformname }}/maidnomadweb/maidnomadweb/db.sqlite3"
+        state: file
+        owner: "{{ platformname }}"
+        group: www-data
