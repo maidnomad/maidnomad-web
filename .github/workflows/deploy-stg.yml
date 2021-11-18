@@ -1,0 +1,28 @@
+name: deploy
+
+on:
+  workflow_run:
+    # ci が成功した時だけDeployする
+    workflows:
+      - ci
+    branches:
+      - stg
+    types: 
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run ansible playbook
+      env:
+        PRIVATE_KEY: ${{ secrets.SSH_SECRET_KEY }}
+        HOSTS_FILE: ${{ secrets.ANSIBLE_HOSTSFILE_STAGING }}
+      run: |
+        mkdir -p ~/.ssh
+        echo "$PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+        chmod 400 ~/.ssh/id_rsa
+        cd deploy
+        echo "$HOSTS_FILE" | tr -d '\r' > hosts
+        ansible-playbook -i hosts deploy.yml

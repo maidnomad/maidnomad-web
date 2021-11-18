@@ -1,5 +1,9 @@
-[server]
 # 1. あらかじめホスト管理者に公開鍵を送ってください
-# 2. このファイルをコピーして hosts としてください
-# 3. 管理者から受け取った情報をもとに以下のようなサーバー情報を記入してください
-# server.example.com:22  ansible_ssh_user=username  ansible_python_interpreter=/usr/bin/python3
+# 2. 管理者からhostsファイルを受け取って、hostsとしてこのディレクトリに配置してください。
+# [server]
+# server.example.com:22  ansible_ssh_user={{ プラットフォーム名 }}  ansible_python_interpreter=/usr/bin/python3
+# [server:vars]
+# platformname={{ プラットフォーム名 }}
+# AWS_S3_ACCESS_KEY_ID={{ S3アクセスキーID }}
+# AWS_S3_SECRET_ACCESS_KEY={{ S3シークレットアクセスキー }}
+# AWS_STORAGE_BUCKET_NAME={{ S3バケット名 }}

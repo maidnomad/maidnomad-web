@@ -2,8 +2,9 @@ name: ci
 
 on:
   push:
-    branches: # main に直接pushしたとき
+    branches: # main, stg に直接pushしたとき
       - main
+      - stg
   pull_request: # PullRequest作成、同期時に実行させる
     types:
       - opened
