@@ -55,4 +55,5 @@
         path: "/srv/{{ platformname }}/maidnomadweb/maidnomadweb/db.sqlite3"
         state: file
         owner: "{{ platformname }}"
+        mode: 0660
         group: www-data
