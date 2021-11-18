@@ -18,6 +18,7 @@
       git:
         repo: https://github.com/maidnomad/maidnomad-web.git
         dest: "/srv/{{ platformname }}/maidnomadweb"
+        version: "{{ branch }}"
 
     - name: pip install libraries
       pip:
