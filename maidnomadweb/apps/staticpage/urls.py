@@ -3,18 +3,10 @@ from django.shortcuts import redirect
 from django.urls import path, reverse
 
 urlpatterns = [
-    path("", views.staticpage("top"), name="top"),
-    path(
-        "information/maidnomad_info",
-        views.staticpage("maidnomad_info"),
-        name="maidnomad_info",
-    ),
-    path(
-        "information/maidcafe_info",
-        views.staticpage("maidcafe_info"),
-        name="maidcafe_info",
-    ),
-    path("organization", views.staticpage("organization"), name="organization"),
+    path("", **views.staticpage("top")),
+    path("information/maidnomad_info", **views.staticpage("maidnomad_info")),
+    path("information/maidcafe_info", **views.staticpage("maidcafe_info")),
+    path("organization", **views.staticpage("organization")),
     # 旧サイトからの301リダイレクト
     path(
         "information/for_maidcafe_info",
