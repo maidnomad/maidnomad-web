@@ -57,3 +57,11 @@
         owner: "{{ platformname }}"
         mode: 0660
         group: www-data
+
+    - name: set db directory group
+      file:
+        path: "/srv/{{ platformname }}/maidnomadweb/maidnomadweb/"
+        state: directory
+        owner: "{{ platformname }}"
+        mode: 0775
+        group: www-data
