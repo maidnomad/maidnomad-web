@@ -29,7 +29,7 @@ def index(request: HttpRequest) -> HttpResponse:
         request,
         "maidlist/index.html",
         {
-            "canonical_url": settings.SITE_ROOT_URL + reverse("index"),
+            "canonical_url": settings.SITE_ROOT_URL + reverse("maidlist:index"),
             "breadcrumbs": [
                 {
                     "text": "運営体制",
@@ -64,7 +64,9 @@ def detail(request: HttpRequest, code: str) -> HttpResponse:
     if not maid_profile.visible:
         raise Http404()
 
-    canonical_url = settings.SITE_ROOT_URL + reverse("detail", kwargs={"code": code})
+    canonical_url = settings.SITE_ROOT_URL + reverse(
+        "maidlist:detail", kwargs={"code": code}
+    )
     return render(
         request,
         "maidlist/detail.html",
@@ -77,7 +79,7 @@ def detail(request: HttpRequest, code: str) -> HttpResponse:
                 },
                 {
                     "text": "メイドさん紹介",
-                    "url": reverse("index"),
+                    "url": reverse("maidlist:index"),
                 },
                 {
                     "text": maid_profile.name,

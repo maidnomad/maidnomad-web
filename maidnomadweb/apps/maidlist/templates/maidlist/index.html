@@ -28,7 +28,7 @@
         <ul id="maidnomad-maid-thumbnail">
 {% for maid in maid_list %}
             <li>
-                <a href="{% url 'detail' maid.code %}">
+                <a href="{% url 'maidlist:detail' maid.code %}">
     {% if maid.image_url %}
                     <img src="{{ maid.image_url }}" alt="" style="height: 120px;width: auto" class="alignnone size-thumbnail" />
     {% else %}
