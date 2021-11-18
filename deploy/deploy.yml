@@ -14,7 +14,7 @@
         virtualenv_command: -m venv
         virtualenv: "/srv/{{ platformname }}/venv/"
 
-    - name: git pull main branch
+    - name: git pull
       git:
         repo: https://github.com/maidnomad/maidnomad-web.git
         dest: "/srv/{{ platformname }}/maidnomadweb"
