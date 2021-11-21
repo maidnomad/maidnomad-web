@@ -2,6 +2,7 @@ from admin_ordering.admin import OrderableAdmin
 from django.contrib import admin
 from django.utils.html import format_html
 from import_export.admin import ExportActionMixin, ImportMixin
+from import_export.formats import base_formats
 from reversion.admin import VersionAdmin
 
 from .models import MaidProfile
@@ -51,6 +52,7 @@ class MaidProfileAdmin(ExportActionMixin, ImportMixin, OrderableAdmin, VersionAd
 
     # for import-export
     resource_class = MaidProfileResource
+    formats = [base_formats.CSV, base_formats.JSON]  # yamlも使いたいがバグってるので、今回は無効とする
 
     # for buttons
     change_list_template = "admin/maidlist/change_list.html"
