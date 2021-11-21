@@ -8,4 +8,5 @@
         <li><a href="{% url opts|admin_urlname:'recoverlist' %}" class="recoverlink">{% blocktrans with cl.opts.verbose_name_plural|escape as name %}削除したデータ復元{% endblocktrans %}</a></li>
     {% endif %}
     {{block.super}}
+    <script>django.jQuery(".object-tools .addlink").text("追加")</script>
 {% endblock %}
