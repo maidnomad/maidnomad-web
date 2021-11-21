@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<article class="page type-page status-publish has-post-thumbnail hentry">
+    <header class="entry-header">
+        <h1 class="entry-title">運営体制</h1>
+    </header><!-- .entry-header -->
+
+    <div class="entry-content">
+
+{% markdown %}
+メイドカフェでノマド会は次の体制で運営されています。
+
+- [代表者](#representative_work)
+- [参加者](#participant_work)
+    - [イベントオーガナイザー](#organizers_work)
+    - [メイドさん](#maid_work)
+    - 一般参加者
+
+## 職務内容
+
+<h3 id="representative_work">代表者</h3>
+
+- メイドカフェでノマド会運営の継続に責任を持ち、必要なことを行います
+
+<h3 id="participant_work">参加者</h3>
+
+- イベント主催者、メイドさん、一般参加者すべてが **一つのイベントを実行する「参加者」** だと考えています。ノマド会に「お客様」はいません
+- 参加者は「やりたいことを実現する場」としてノマド会を活用してください
+- 参加者は、他の参加者の「やりたいこと」を尊重し合うようにしてください
+
+<h3 id="organizers_work">イベントオーガナイザー</h3>
+
+- イベントを企画・主催します
+- 必要に応じて店舗と交渉を行います
+- 必要に応じてメイドさんを集め、お給仕を依頼します
+
+[オーガナイザー紹介](/organization/organizers_profile)
+
+<h3 id="maid_work">メイドさん</h3>
+
+- メイドさんも「参加者の一人」としてイベントに関わります
+- イベントオーガナイザーと話し合って一緒に良いイベントを作ってもらっています
+
+[メイドさん紹介]({% url 'maidlist:index' %})
+
+{% endmarkdown %}
+
+{% include "socialbuttons.html" with title="メイドカフェでノマド会運営体制" %}
+{% include "adsense_box.html" %}
+
+    </div><!-- .entry-content -->
+</article><!-- #post -->
+{% endblock %}

@@ -1,0 +1,38 @@
+<div class="menu-menu-1-container">
+    <ul class="nav-menu">
+        <li id="menu-top" class="menu-item menu-item-home"><a href="{% url 'top' %}">TopPage</a></li>
+        <li class="menu-item menu-item-has-children"><a href="javascript:void(0)">活動</a>
+            <ul class="sub-menu">
+                <li class="menu-item"><a target="_blank" rel="noopener" href="https://maid-cafe-nomad.connpass.com">イベント告知・申込み (外部サイト)</a></li>
+                <li class="menu-item"><a target="_blank" rel="noopener" href="https://maid-cafe-nomad.slack.com/">Slack (外部サイト)</a></li>
+            </ul>
+        </li>
+        <li id="menu-information" class="menu-item menu-item-has-children"><a href="javascript:void(0)">Information</a>
+            <ul class="sub-menu">
+                <li class="menu-item"><a href="{% url 'maidnomad_info' %}">メイドカフェ店舗様向けノマド会のご紹介</a></li>
+                <li class="menu-item"><a href="{% url 'maidcafe_info' %}">秋葉原のノマドに最適なメイドカフェ情報</a></li>
+            </ul>
+        </li>
+        <li id="menu-organization" class="menu-item menu-item-has-children"><a href="javascript:void(0)">運営</a>
+            <ul class="sub-menu">
+                <li class="menu-item"><a href="{% url 'organization' %}">運営体制</a></li>
+                <li class="menu-item"><a href="{% url 'maidlist:index' %}" aria-current="page">メイドさん紹介</a></li>
+                <li class="menu-item"><a href="https://www.maid-cafe.work/organization/organizers_profile">イベントオーガナイザー紹介</a></li>
+            </ul>
+        </li>
+        <li class="menu-item"><a target="_blank" rel="noopener" href="https://photos.app.goo.gl/B94dVMytZ5ypwatq1">Gallery</a></li>
+        <li class="menu-item"><a href="https://www.maid-cafe.work/blog">ブログ</a></li>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    {# 現在のページメニューカテゴリを活性化する #}
+    var current_url = jQuery(location).attr('pathname');
+    if (current_url == "/") {
+        jQuery("#menu-top").addClass("current-menu-ancestor");
+    } else if (current_url.indexOf("/information") != -1) {
+        jQuery("#menu-information").addClass("current-menu-ancestor");
+    } else if (current_url.indexOf("/organization") != -1) {
+        jQuery("#menu-organization").addClass("current-menu-ancestor");
+    }
+</script>
