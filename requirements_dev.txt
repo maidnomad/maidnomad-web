@@ -1,10 +1,15 @@
 -r requirements.txt
 pytest
 pytest-cov
+pytest-django
+pytest-dotenv
 pytest-pythonpath
+factory_boy
 black
 isort
 mypy
 flake8
 freezegun
+types-bleach
 types-freezegun
+types-Markdown

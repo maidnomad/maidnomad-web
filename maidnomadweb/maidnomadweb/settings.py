@@ -40,7 +40,7 @@ SECRET_KEY = environ.get("DJANGO_SECRET_KEY")
 DEBUG = env_bool("DJANGO_DEBUG")
 
 ALLOWED_HOSTS = env_str_list("DJANGO_ALLOWED_HOSTS")
-
+SITE_ROOT_URL = environ.get("SITE_ROOT_URL")
 
 # Application definition
 
@@ -52,6 +52,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "storages",
+    "admin_ordering",
+    "reversion",
+    "apps.core",
+    "apps.maidlist",
 ]
 
 MIDDLEWARE = [
@@ -118,15 +122,19 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ja-JP"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Tokyo"
 
 USE_I18N = True
 
 USE_L10N = True
 
 USE_TZ = True
+
+
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "/media/"
 
 
 # Static files (CSS, JavaScript, Images)

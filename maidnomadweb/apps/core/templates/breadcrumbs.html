@@ -1,0 +1,16 @@
+{% if breadcrumbs %}
+<div class="breadcrumbs" vocab="https://schema.org/" typeof="BreadcrumbList">
+{% for breadcrumb in breadcrumbs %}
+    {% if breadcrumb.url %}
+    <span property="itemListElement" typeof="ListItem">
+        <a property="item" typeof="WebPage" title="Go to {{ breadcrumb.text }}." href="{{ breadcrumb.url }}" class="post post-page" >
+            <span property="name">{{ breadcrumb.text }}</span>
+        </a>
+        <meta property="position" content="{{ forloop.counter }}}" />
+    </span> &gt;
+    {% else %}
+    <span class="post post-page current-item">{{ breadcrumb.text }}</span>
+    {% endif %}
+{% endfor %}
+</div>
+{% endif %}
