@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     "storages",
     "admin_ordering",
     "reversion",
+    "import_export",
     "apps.core",
     "apps.staticpage",
     "apps.maidlist",
