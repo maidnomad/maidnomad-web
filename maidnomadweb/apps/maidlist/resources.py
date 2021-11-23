@@ -4,6 +4,8 @@ from .models import MaidProfile
 
 
 class MaidProfileResource(resources.ModelResource):
+    """メイドさん自己紹介のインポート・エクスポート機能で使用する項目"""
+
     class Meta:
         model = MaidProfile
         import_id_fields = {
