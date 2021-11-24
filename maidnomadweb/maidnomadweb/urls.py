@@ -6,6 +6,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path("__django_admin/", admin.site.urls),
+    path("mdeditor/", include("mdeditor.urls")),
     path(
         "parts/menu_only",
         lambda request: render(request, "menu.html"),

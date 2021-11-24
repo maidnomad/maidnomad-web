@@ -1,0 +1,25 @@
+{#
+    オリジナルの django-mdeditor ではできない editor.md のオプションを設定する
+
+    オプションは以下を参照
+    https://github.com/pandao/editor.md
+#}
+<script type="text/javascript">
+    (function() {
+        // オリジナルを退避
+        var org_editormd = editormd;
+
+        // 関数を上書き
+        window.editormd = function(id, options) {
+            // オリジナルではタブがハードタブなのでソフトタブに変更する
+            options.indentWithTabs = false;
+            options.indentUnit = 2;
+            options.indentUnit = 2;
+            options.imageUpload = false;
+            // オリジナルを呼ぶ
+            return org_editormd(id, options);
+        };
+    })();
+</script>
+{# オリジナルテンプレート呼び出し #}
+{% extends "markdown.html" %}
