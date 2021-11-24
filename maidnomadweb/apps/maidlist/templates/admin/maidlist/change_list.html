@@ -1,14 +1,13 @@
-{# メイドさん自己紹介管理画面一覧上部のボタンリスト
+{# メイドさん自己紹介管理画面一覧上部のボタンリスト #}
+{% comment "説明" %}
+以下のライブラリを組み合わせたところ互いに干渉しボタンが出なかった。
 
-  以下のライブラリを組み合わせたところ互いに干渉しボタンが出なかった。
+- django-admin-ordering
+- django-reversion
+- django-import-export  
 
-  - django-admin-ordering
-  - django-reversion
-  - django-import-export  
-
-  出ない原因はテンプレート継承によってボタンリストが上書きされるのみであったため当該テンプレートを手動で統合した
-#}
-
+出ない原因はテンプレート継承によってボタンリストが上書きされるのみであったため当該テンプレートを手動で統合した
+{% endcomment %}
 {% extends "admin/change_list.html" %}
 {% load i18n admin_urls %}
 
