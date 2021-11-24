@@ -62,10 +62,10 @@ INSTALLED_APPS = [
     "admin_ordering",
     "reversion",
     "import_export",
-    "mdeditor",
     "apps.core",
     "apps.staticpage",
     "apps.maidlist",
+    "mdeditor",
 ]
 
 MIDDLEWARE = [
@@ -192,6 +192,9 @@ MDEDITOR_CONFIGS = {
             "help", "info",
             "||", "preview", "watch"
         ],
+        "upload_image_formats": [],
+        "lineWrapping": True,
+        "watch": False,
     }
 }
 
