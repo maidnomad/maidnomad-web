@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     "admin_ordering",
     "reversion",
     "import_export",
+    "mdeditor",
     "apps.core",
     "apps.staticpage",
     "apps.maidlist",
@@ -143,6 +144,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+X_FRAME_OPTIONS = "SAMEORIGIN"
+
 
 MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
@@ -173,6 +176,24 @@ if AWS_S3_ACCESS_KEY_ID and AWS_S3_SECRET_ACCESS_KEY:
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+
+# MDEDITOR
+
+MDEDITOR_CONFIGS = {
+    "default": {
+        "language": "en",
+        "toolbar": [
+            # fmt: off
+            "undo", "redo", "|",
+            "bold", "del", "italic", "quote", "uppercase", "lowercase", "|",
+            "list-ul", "list-ol", "hr", "|",
+            "link", "code", "table",
+            "|",
+            "help", "info",
+            "||", "preview", "watch"
+        ],
+    }
+}
 
 # Logging
 LOGGING: dict[str, Any] = {

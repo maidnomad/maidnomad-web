@@ -9,3 +9,4 @@ boto3
 markdown
 bleach
 bleach_allowlist
+django-mdeditor
