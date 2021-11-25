@@ -25,21 +25,31 @@ class MaidProfileAdmin(ExportActionMixin, ImportMixin, OrderableAdmin, VersionAd
 
     main_image_tag.short_description = "メイン画像（プレビュー）"  # type: ignore
 
+    def og_image_tag(self, obj):
+        return format_html(
+            f'<img src="{obj.og_image.url}" style="max-height: 120px; width: 120px;" />'
+        )
+
+    og_image_tag.short_description = "メイン画像（OGP）"  # type: ignore
+
     fields = [
         "code",
         "name",
         "content",
-        "thumbnail_image",
-        "thumbnail_image_tag",
         "main_image",
         "main_image_tag",
+        "thumbnail_image",
+        "thumbnail_image_tag",
+        "og_image",
+        "og_image_tag",
         "visible",
         "created_at",
         "updated_at",
     ]
     readonly_fields = [
-        "thumbnail_image_tag",
         "main_image_tag",
+        "thumbnail_image_tag",
+        "og_image_tag",
         "created_at",
         "updated_at",
     ]

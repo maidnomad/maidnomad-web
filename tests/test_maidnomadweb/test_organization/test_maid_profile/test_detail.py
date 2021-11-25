@@ -11,6 +11,7 @@ class Testメイドさん紹介詳細ページ:
             code="maidchan",
             name="メイドちゃん",
             main_image__filename="maidchan.jpg",
+            og_image__filename="maidchan_og.jpg",
         )
 
         # act
@@ -21,6 +22,28 @@ class Testメイドさん紹介詳細ページ:
         assert response.context["maid_profile"].code == "maidchan"
         assert response.context["maid_profile"].name == "メイドちゃん"
         assert response.context["image_url"] == "/media/maidlist_main/maidchan.jpg"
+        assert response.context["og_image_url"] == "/media/maidlist_ogp/maidchan_og.jpg"
+
+    def test_OGPが設定されていない時はサムネイル画像が表示されること(self, client):
+        # arrange
+        from factories import MaidProfileFactory
+
+        MaidProfileFactory(
+            code="maidchan",
+            name="メイドちゃん",
+            main_image__filename="maidchan.jpg",
+            thumbnail_image__filename="maidchan.jpg",
+            og_image=None,
+        )
+
+        # act
+        response = client.get("/organization/maid_profile/maidchan")
+
+        # assert
+        assert response.status_code == 200
+        assert (
+            response.context["og_image_url"] == "/media/maidlist_thumbnail/maidchan.jpg"
+        )
 
     def test_メイン画像がNullの時はサムネイル画像を表示すること(self, client):
         # arrange
@@ -30,6 +53,7 @@ class Testメイドさん紹介詳細ページ:
             code="maidchan",
             thumbnail_image__filename="maidchan.jpg",
             main_image=None,
+            og_image=None,
         )
 
         # act
@@ -38,6 +62,9 @@ class Testメイドさん紹介詳細ページ:
         # assert
         assert response.status_code == 200
         assert response.context["image_url"] == "/media/maidlist_thumbnail/maidchan.jpg"
+        assert (
+            response.context["og_image_url"] == "/media/maidlist_thumbnail/maidchan.jpg"
+        )
         assert "no_image.png" not in str(response.content)
 
     def test_メイン画像もサムネイルもNullの時はNoImage画像を表示すること(self, client):
@@ -49,6 +76,7 @@ class Testメイドさん紹介詳細ページ:
             code="maidchan",
             thumbnail_image=None,
             main_image=None,
+            og_image=None,
         )
 
         # act
@@ -57,6 +85,7 @@ class Testメイドさん紹介詳細ページ:
         # assert
         assert response.status_code == 200
         assert response.context["image_url"] is None
+        assert response.context["og_image_url"] is None
         assert "no_image.png" in str(response.content)
 
     @pytest.mark.parametrize(

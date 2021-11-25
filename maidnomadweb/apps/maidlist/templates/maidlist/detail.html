@@ -7,8 +7,10 @@
 	<meta property="og:site_name" content="{{ SITE_ROOT_TITLE }}" />
 	<meta property="og:locale" content="ja" />
 	<meta property="og:type" content="article" />
-    {% if image_url %}
-	<meta property="og:image" content="{{ image_url }}" />
+    {% if og_image_url %}
+	<meta property="og:image" content="{{ og_image_url }}" />
+    {% else %}
+    <meta property="og:image" content="{% static 'no_image.png' %}" />
     {% endif %}
 	<meta property="og:title" content="{{ maid_profile.name }}" />
 {% endblock %}

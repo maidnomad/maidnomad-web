@@ -16,6 +16,7 @@ def index(request: HttpRequest) -> HttpResponse:
             "name",
             "main_image",
             "thumbnail_image",
+            "og_image",
         )
         .filter(
             visible=True,
@@ -94,6 +95,7 @@ def detail(request: HttpRequest, code: str) -> HttpResponse:
             ],
             "maid_profile": maid_profile,
             "image_url": _to_detail_image_url(maid_profile),
+            "og_image_url": _to_og_image_url(maid_profile),
             "content": _to_content_html_safe(maid_profile.content),
         },
     )
@@ -111,4 +113,14 @@ def _to_detail_image_url(maid_profile: MaidProfile):
         return maid_profile.main_image.url
     if maid_profile.thumbnail_image:
         return maid_profile.thumbnail_image.url
+    return None
+
+
+def _to_og_image_url(maid_profile: MaidProfile):
+    if maid_profile.og_image:
+        return maid_profile.og_image.url
+    if maid_profile.thumbnail_image:
+        return maid_profile.thumbnail_image.url
+    if maid_profile.main_image:
+        return maid_profile.main_image.url
     return None
