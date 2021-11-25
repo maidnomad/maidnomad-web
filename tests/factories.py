@@ -12,3 +12,4 @@ class MaidProfileFactory(factory.django.DjangoModelFactory):
     content = factory.fuzzy.FuzzyText()
     main_image = factory.django.ImageField()
     thumbnail_image = factory.django.ImageField()
+    og_image = factory.django.ImageField()

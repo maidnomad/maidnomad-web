@@ -16,6 +16,7 @@ class MaidProfile(Model):
         "サムネイル画像", upload_to="maidlist_thumbnail/", null=True, blank=True
     )
     main_image = ImageField("メイン画像", upload_to="maidlist_main/", null=True, blank=True)
+    og_image = ImageField("OGP画像", upload_to="maidlist_ogp/", null=True, blank=True)
 
     visible = BooleanField("表示", default=True)
     order = IntegerField("表示順", default=0, db_index=True)
