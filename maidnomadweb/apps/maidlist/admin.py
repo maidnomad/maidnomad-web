@@ -30,7 +30,7 @@ class MaidProfileAdmin(ExportActionMixin, ImportMixin, OrderableAdmin, VersionAd
             f'<img src="{obj.og_image.url}" style="max-height: 120px; width: 120px;" />'
         )
 
-    og_image_tag.short_description = "メイン画像（OGP）"  # type: ignore
+    og_image_tag.short_description = "OGP画像（プレビュー）"  # type: ignore
 
     fields = [
         "code",
