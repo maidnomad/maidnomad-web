@@ -16,6 +16,7 @@ class StaffProfileResource(resources.ModelResource):
         fields = [
             "code",
             "name",
+            "description",
             "content",
             "thumbnail_image",
             "main_image",
