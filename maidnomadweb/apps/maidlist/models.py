@@ -4,6 +4,7 @@ from django.db.models.fields import (
     CharField,
     DateTimeField,
     IntegerField,
+    TextField,
 )
 from mdeditor.fields import MDTextField
 
@@ -11,6 +12,7 @@ from mdeditor.fields import MDTextField
 class MaidProfile(Model):
     code = CharField("英語表記", max_length=50, unique=True)
     name = CharField("名前", max_length=128)
+    description = TextField("Description", blank=True)
     content = MDTextField("自己紹介", blank=True)
     thumbnail_image = ImageField(
         "サムネイル画像", upload_to="maidlist_thumbnail/", null=True, blank=True
