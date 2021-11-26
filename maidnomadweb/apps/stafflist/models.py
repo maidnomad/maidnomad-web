@@ -10,6 +10,17 @@ from mdeditor.fields import MDTextField
 
 
 class StaffProfile(Model):
+    """stafflistの派生アプリでプロフィールとして表示できるベースのモデルです。
+
+    このクラスは抽象クラスであり、必ず継承して使うことを想定しています。
+    直接インスタンス化できません。
+
+    必要に応じて項目を足すことはできますが消すことはできません。
+
+    サブクラスではメタクラスを作成し `ordering = ["order"]` を必ず指定してください。
+    そうしないと順番の入れ替えが機能しません。
+    """
+
     code = CharField("英語表記", max_length=50, unique=True)
     name = CharField("名前", max_length=128)
     description = TextField("Description", blank=True)
