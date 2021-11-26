@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block headtag_information %}
-	<title>{{ maid_profile.name }} | {{ SITE_ROOT_TITLE }}</title>
+    <title>{{ maid_profile.name }} | {{ SITE_ROOT_TITLE }}</title>
     {% if maid_profile.description %}
     <meta name="description" content="メイドカフェでノマド会所属メイド {{ maid_profile.name }} さんを紹介します。{{ maid_profile.description }}" />
     <meta property="og:description" content="{{ maid_profile.description }}" />
@@ -10,15 +10,15 @@
     <meta name="description" content="メイドカフェでノマド会所属メイド {{ maid_profile.name }} さんを紹介します。" />
     <meta property="og:description" content="メイドカフェでノマド会所属メイド {{ maid_profile.name }} さんを紹介します。" />
     {% endif %}
-	<meta property="og:site_name" content="{{ SITE_ROOT_TITLE }}" />
-	<meta property="og:locale" content="ja" />
-	<meta property="og:type" content="article" />
+    <meta property="og:site_name" content="{{ SITE_ROOT_TITLE }}" />
+    <meta property="og:locale" content="ja" />
+    <meta property="og:type" content="article" />
     {% if og_image_url %}
-	<meta property="og:image" content="{{ og_image_url }}" />
+    <meta property="og:image" content="{{ og_image_url }}" />
     {% else %}
     <meta property="og:image" content="{% static 'no_image.png' %}" />
     {% endif %}
-	<meta property="og:title" content="{{ maid_profile.name }}" />
+    <meta property="og:title" content="{{ maid_profile.name }}" />
 {% endblock %}
 
 {% block content %}
