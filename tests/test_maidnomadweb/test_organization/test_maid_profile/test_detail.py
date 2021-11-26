@@ -19,8 +19,8 @@ class Testメイドさん紹介詳細ページ:
 
         # assert
         assert response.status_code == 200
-        assert response.context["maid_profile"].code == "maidchan"
-        assert response.context["maid_profile"].name == "メイドちゃん"
+        assert response.context["profile"].code == "maidchan"
+        assert response.context["profile"].name == "メイドちゃん"
         assert response.context["image_url"] == "/media/maidlist_main/maidchan.jpg"
         assert response.context["og_image_url"] == "/media/maidlist_ogp/maidchan_og.jpg"
 
@@ -158,7 +158,6 @@ class Testメイドさん紹介詳細ページ:
         assert response.context["content"] == "&lt;script&gt;"
 
     def test_Descriptionが設定されている時はmetaとogpのdescriptionに設定されること(self, client):
-        # fmt: off
         # arrange
         from factories import MaidProfileFactory
 
@@ -170,11 +169,13 @@ class Testメイドさん紹介詳細ページ:
 
         # assert
         assert response.status_code == 200
-        assert '<meta name="description" content="メイドカフェでノマド会所属メイド メイドちゃん さんを紹介します。初めましてメイドちゃんです♡" />' in content
+        assert (
+            '<meta name="description" content="メイドカフェでノマド会所属メイド メイドちゃん を紹介します。初めましてメイドちゃんです♡" />'
+            in content
+        )
         assert '<meta property="og:description" content="初めましてメイドちゃんです♡" />' in content
 
     def test_Descriptionが設定されていない時はmetaとogpのdescriptionに紹介文が設定されること(self, client):
-        # fmt: off
         # arrange
         from factories import MaidProfileFactory
 
@@ -186,6 +187,11 @@ class Testメイドさん紹介詳細ページ:
 
         # assert
         assert response.status_code == 200
-        print(content)
-        assert '<meta name="description" content="メイドカフェでノマド会所属メイド メイドちゃん さんを紹介します。" />' in content
-        assert '<meta property="og:description" content="メイドカフェでノマド会所属メイド メイドちゃん さんを紹介します。" />' in content
+        assert (
+            '<meta name="description" content="メイドカフェでノマド会所属メイド メイドちゃん を紹介します。" />'
+            in content
+        )
+        assert (
+            '<meta property="og:description" content="メイドカフェでノマド会所属メイド メイドちゃん を紹介します。" />'
+            in content
+        )

@@ -1,8 +1,6 @@
-from django.urls import path
+from apps.stafflist.urls import get_staff_profile_urlpatterns
 
 from . import views
 
-urlpatterns = [
-    path("", views.index, name="index"),
-    path("<str:code>", views.detail, name="detail"),
-]
+urlpatterns = []
+urlpatterns += get_staff_profile_urlpatterns(views.MaidProfileViewSet)

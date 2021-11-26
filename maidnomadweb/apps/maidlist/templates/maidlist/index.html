@@ -1,53 +1,25 @@
-{% extends "base.html" %}
+{% extends "stafflist/index.html" %}
 {% load static %}
 
-{% block headtag_information %}
-    <title>メイドさん紹介 | {{ SITE_ROOT_TITLE }}</title>
-    <meta name="description" content="メイドカフェでノマド会所属のメイドさんを紹介します。" />
-    <meta property="og:site_name" content="{{ SITE_ROOT_TITLE }}" />
-    <meta property="og:locale" content="ja" />
-    <meta property="og:type" content="article" />
-    <meta property="og:image:width" content="400" />
-    <meta property="og:image:height" content="399" />
-    <meta property="og:image" content="https://www.maid-cafe.work/wp-content/uploads/sites/2/2017/09/Yj_rD8DQ.jpg" />
-    <meta property="og:title" content="{{ SITE_ROOT_TITLE }}" />
-    <meta property="og:description" content="{{ SITE_ROOT_DESCRIPTION }}" />
+{% block staff_list_content %}
+<ul id="maidnomad-maid-thumbnail">
+    {% for staff in staff_list %}
+    <li>
+        <a href="{% url viewset.detail_name staff.code %}">
+        {% if staff.image_url %}
+            <img src="{{ staff.image_url }}" alt="{{ staff.name }}" style="height: 120px;width: auto" class="alignnone size-thumbnail" />
+        {% else %}
+            <img src="{% static 'no_image.png' %}" alt="{{ staff.name }}" style="height: 120px;width: auto" class="alignnone size-thumbnail" />
+        {% endif %}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
 {% endblock %}
 
-{% block content %}
-<article id="maidlist-index" class="page type-page status-publish has-post-thumbnail hentry">
-    <header class="entry-header">
-        <div class="entry-thumbnail">
-            <img width="400" height="270" src="https://www.maid-cafe.work/wp-content/uploads/sites/2/2017/09/Yj_rD8DQ-400x270.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" loading="lazy" />
-        </div>
-        
-        <h1 class="entry-title">メイドさん紹介</h1>
-    </header><!-- .entry-header -->
-
-    <div class="entry-content">
-        <ul id="maidnomad-maid-thumbnail">
-{% for maid in maid_list %}
-            <li>
-                <a href="{% url 'maidlist:detail' maid.code %}">
-    {% if maid.image_url %}
-                    <img src="{{ maid.image_url }}" alt="" style="height: 120px;width: auto" class="alignnone size-thumbnail" />
-    {% else %}
-                    <img src="{% static 'no_image.png' %}" alt="" style="height: 120px;width: auto" class="alignnone size-thumbnail" />
-    {% endif %}
-                </a>
-            </li>
-{% endfor %}
-<p>
-</ul>
-<p>
-    メイドカフェでノマド会でメイドさんをしてみたい方は、こちらのフォームよりご応募ください。
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSegvKIC5PzQsVH0Fanb9L8ipdoZdk1wCj8osLsf1ch4XdVaqw/viewform?usp=fb_send_twt">メイドカフェでノマド会メイドさん応募フォーム</a>
-</p>
-
-{% include "socialbuttons.html" with title="メイドさん紹介" %}
-{% include "adsense_box.html" %}
-
-    </div><!-- .entry-content -->
-</article><!-- #post -->
-
+{% block footer_message %}
+{% markdown %}
+メイドカフェでノマド会でメイドさんをしてみたい方は、こちらのフォームよりご応募ください。
+[メイドカフェでノマド会メイドさん応募フォーム](https://docs.google.com/forms/d/e/1FAIpQLSegvKIC5PzQsVH0Fanb9L8ipdoZdk1wCj8osLsf1ch4XdVaqw/viewform?usp=fb_send_twt)
+{% endmarkdown %}
 {% endblock %}

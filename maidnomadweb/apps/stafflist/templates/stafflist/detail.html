@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block headtag_information %}
+    <title>{{ profile.name }} | {{ SITE_ROOT_TITLE }}</title>
+    {% if profile.description %}
+    <meta name="description" content="{{ viewset.profile_title }} {{ profile.name }} を紹介します。{{ profile.description }}" />
+    <meta property="og:description" content="{{ profile.description }}" />
+    {% else %}
+    <meta name="description" content="{{ viewset.profile_title }} {{ profile.name }} を紹介します。" />
+    <meta property="og:description" content="{{ viewset.profile_title }} {{ profile.name }} を紹介します。" />
+    {% endif %}
+    <meta property="og:site_name" content="{{ SITE_ROOT_TITLE }}" />
+    <meta property="og:locale" content="ja" />
+    <meta property="og:type" content="article" />
+    {% if og_image_url %}
+    <meta property="og:image" content="{{ og_image_url }}" />
+    {% endif %}
+    <meta property="og:title" content="{{ profile.name }}" />
+{% endblock %}
+
+{% block content %}
+<style>
+    h2 {
+        font-size: 1em;
+        font-weight: bold;
+        font-family: "Source Sans Pro", Helvetica, sans-serif;
+    }
+</style>
+
+<article id="stafflist-detail" class="page type-page status-publish has-post-thumbnail hentry">
+    <header class="entry-header">
+{% block entry_header_content %}
+{# ヘッダーエリア #}
+        <div class="entry-thumbnail">
+            {% if image_url %}
+                <img width="300" height="270" src="{{ image_url }}" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" loading="lazy" />
+            {% else %}
+                <img width="300" height="270" src="{% static 'no_image.png' %}" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" loading="lazy" />
+            {% endif %}
+        </div>
+        
+        <h1 class="entry-title">{{ profile.name }}</h1>
+{% endblock %}
+    </header><!-- .entry-header -->
+
+    <div class="entry-content">
+
+{% block staff_content %}
+        {{content | safe}}
+{% endblock %}
+
+{% block bottom_return_area %}
+{# 戻りリンクエリア #}
+    <p><a href="{% url viewset.index_name %}">{{ viewset.return_index_link_text }}</a></p>
+{% endblock %}
+
+{# ソーシャルボタンと広告 #}
+{% with socialtitle=profile.name|add:"|"|add:SITE_ROOT_TITLE %}
+    {% include "socialbuttons.html" with title=socialtitle %}
+{% endwith %}
+{% include "adsense_box.html" %}
+
+    </div><!-- .entry-content -->
+</article><!-- #post -->
+
+{% endblock %}

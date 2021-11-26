@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block headtag_information %}
+    <title>{{ viewset.verbose_name }} | {{ SITE_ROOT_TITLE }}</title>
+    <meta name="description" content="{{ viewset.index_description }}" />
+    <meta property="og:site_name" content="{{ SITE_ROOT_TITLE }}" />
+    <meta property="og:locale" content="ja" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image:width" content="400" />
+    <meta property="og:image:height" content="399" />
+    <meta property="og:image" content="https://www.maid-cafe.work/wp-content/uploads/sites/2/2017/09/Yj_rD8DQ.jpg" />
+    <meta property="og:title" content="{{ SITE_ROOT_TITLE }}" />
+    <meta property="og:description" content="{{ SITE_ROOT_DESCRIPTION }}" />
+{% endblock %}
+
+{% block content %}
+<article id="stafflist-index" class="page type-page status-publish has-post-thumbnail hentry">
+
+    <header class="entry-header">
+{% block entry_header_content %}
+        <div class="entry-thumbnail">
+            <img width="400" height="270" src="https://www.maid-cafe.work/wp-content/uploads/sites/2/2017/09/Yj_rD8DQ-400x270.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" loading="lazy" />
+        </div>
+        
+        <h1 class="entry-title">{{ viewset.verbose_name }}</h1>
+{% endblock %}
+    </header><!-- .entry-header -->
+
+    <div class="entry-content">
+
+{% block staff_list_content %}
+    {# スタッフさんリストを以下のような例で書いてください #}
+    <ul>
+    {% for staff in staff_list %}
+        <li><a href="{% url viewset.detail_name staff.code %}">{{ staff.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block footer_message %}
+    {# 募集を呼びかけるメッセージなどをここに書いてください #}
+{% endblock %}
+
+{% include "socialbuttons.html" with title=viewset.verbose_name %}
+{% include "adsense_box.html" %}
+
+    </div><!-- .entry-content -->
+</article><!-- #post -->
+
+{% endblock %}
