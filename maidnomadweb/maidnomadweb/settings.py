@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     "import_export",
     "apps.core",
     "apps.staticpage",
+    "apps.stafflist",
     "apps.maidlist",
     "mdeditor",
 ]

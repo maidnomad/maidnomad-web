@@ -1,0 +1,33 @@
+{# メイドさん自己紹介管理画面一覧上部のボタンリスト #}
+{% extends "admin/change_list.html" %}
+
+{% comment "説明" %}
+以下のライブラリを組み合わせたところ互いに干渉しボタンが出なかった。
+
+- django-admin-ordering
+- django-reversion
+- django-import-export  
+
+出ない原因はテンプレート継承によってボタンリストが上書きされるのみであったため当該テンプレートを手動で統合した
+{% endcomment %}
+
+{% load i18n admin_urls %}
+
+{% block object-tools-items %}
+    {# django-import-export の change_list.html から「インポート」ボタン #}
+    {% include "admin/import_export/change_list_import_item.html" %}
+
+    {# django-reversion の change_list.html から「削除したデータ復元」 #}
+    {% if not is_popup and has_add_permission and has_change_permission %}
+    <li>
+        <a href="{% url opts|admin_urlname:'recoverlist' %}" class="recoverlink">
+            {% blocktrans with cl.opts.verbose_name_plural|escape as name %}削除したデータ復元{% endblocktrans %}
+        </a>
+    </li>
+    {% endif %}
+
+    {{block.super}}
+
+    {# ボタンが多く画面領域が狭くなってしまうので「追加」ボタンの表示を「メイドさん自己紹介 を追加する」から簡潔にした。 #}
+    <script>django.jQuery(".object-tools .addlink").text("追加")</script>
+{% endblock %}
