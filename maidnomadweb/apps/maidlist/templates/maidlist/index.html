@@ -1,6 +1,10 @@
 {% extends "stafflist/index.html" %}
 {% load static %}
 
+{% block entry_header_content %}
+    <h1 class="entry-title">{{ viewset.verbose_name }}</h1>
+{% endblock %}
+
 {% block staff_list_content %}
 <ul id="maidnomad-maid-thumbnail">
     {% for staff in staff_list %}
