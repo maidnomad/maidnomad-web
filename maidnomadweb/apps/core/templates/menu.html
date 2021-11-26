@@ -17,11 +17,11 @@
             <ul class="sub-menu">
                 <li class="menu-item"><a href="{% url 'organization' %}">運営体制</a></li>
                 <li class="menu-item"><a href="{% url 'maidlist:index' %}" aria-current="page">メイドさん紹介</a></li>
-                <li class="menu-item"><a href="https://www.maid-cafe.work/organization/organizers_profile">イベントオーガナイザー紹介</a></li>
+                <li class="menu-item"><a href="{% url 'organizerlist:index' %}">イベントオーガナイザー紹介</a></li>
             </ul>
         </li>
         <li class="menu-item"><a target="_blank" rel="noopener" href="https://photos.app.goo.gl/B94dVMytZ5ypwatq1">Gallery</a></li>
-        <li class="menu-item"><a href="https://www.maid-cafe.work/blog">ブログ</a></li>
+        <li id="menu-blog" class="menu-item"><a href="https://www.maid-cafe.work/blog">ブログ</a></li>
     </ul>
 </div>
 
@@ -34,5 +34,7 @@
         jQuery("#menu-information").addClass("current-menu-ancestor");
     } else if (current_url.indexOf("/organization") != -1) {
         jQuery("#menu-organization").addClass("current-menu-ancestor");
+    } else if (current_url.indexOf("/blog") != -1) {
+        jQuery("#menu-blog").addClass("current-menu-ancestor");
     }
 </script>

@@ -9,7 +9,7 @@
         {% if staff.image_url %}
             <img src="{{ staff.image_url }}" alt="{{ staff.name }}" style="height: 120px;width: auto" class="alignnone size-thumbnail" />
         {% else %}
-            <img src="{% static 'no_image.png' %}" alt="{{ staff.name }}" style="height: 120px;width: auto" class="alignnone size-thumbnail" />
+            <img src="{% static 'maidlist/no_image.png' %}" alt="{{ staff.name }}" style="height: 120px;width: auto" class="alignnone size-thumbnail" />
         {% endif %}
         </a>
     </li>

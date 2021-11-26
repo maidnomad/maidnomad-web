@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     "apps.staticpage",
     "apps.stafflist",
     "apps.maidlist",
+    "apps.organizerlist",
     "mdeditor",
 ]
 

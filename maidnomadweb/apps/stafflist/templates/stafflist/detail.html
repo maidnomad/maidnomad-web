@@ -32,15 +32,11 @@
     <header class="entry-header">
 {% block entry_header_content %}
 {# ヘッダーエリア #}
-        <div class="entry-thumbnail">
-            {% if image_url %}
-                <img width="300" height="270" src="{{ image_url }}" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" loading="lazy" />
-            {% else %}
-                <img width="300" height="270" src="{% static 'no_image.png' %}" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" loading="lazy" />
-            {% endif %}
-        </div>
-        
-        <h1 class="entry-title">{{ profile.name }}</h1>
+{# スタッフさんヘッダーを以下のような例で書いてください #}
+    {% if image_url %}
+    <img width="300" height="270" src="{{ image_url }}" alt="{{ profile.name }}" loading="lazy" />
+    {% endif %}
+    <h1>{{ profile.name }}</h1>
 {% endblock %}
     </header><!-- .entry-header -->
 

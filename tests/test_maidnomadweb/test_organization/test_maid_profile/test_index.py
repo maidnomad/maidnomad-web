@@ -94,7 +94,7 @@ class Testメイドさん紹介一覧ページ:
                 "image_url": "/media/maidlist_main/maidchan.jpg",
             }
         ]
-        assert "no_image.png" not in str(response.content)
+        assert "maidlist/no_image.png" not in str(response.content)
 
     def test_サムネイル画像もメイン画像もない時はnoimage画像が表示されること(self, client):
         # arrange
@@ -116,4 +116,4 @@ class Testメイドさん紹介一覧ページ:
                 "image_url": None,
             }
         ]
-        assert "no_image.png" in str(response.content)
+        assert "maidlist/no_image.png" in str(response.content)

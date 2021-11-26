@@ -12,6 +12,10 @@ urlpatterns = [
         lambda request: render(request, "menu.html"),
     ),
     path("organization/maid_profile/", include(("apps.maidlist.urls", "maidlist"))),
+    path(
+        "organization/organizers_profile/",
+        include(("apps.organizerlist.urls", "organizerlist")),
+    ),
     path("", include("apps.staticpage.urls")),
 ]
 
