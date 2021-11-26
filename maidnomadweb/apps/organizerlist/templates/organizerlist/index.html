@@ -1,0 +1,26 @@
+{% extends "stafflist/index.html" %}
+{% load static %}
+
+{% block staff_list_content %}
+<ul id="organizer_list-thumbnail">
+    {% for staff in staff_list %}
+    <li>
+        <a href="{% url viewset.detail_name staff.code %}">
+        {% if staff.image_url %}
+            <img src="{{ staff.image_url }}" alt="{{ staff.name }}" style="height: 120px;width: auto" class="alignnone size-thumbnail" />
+        {% else %}
+            <img src="{% static 'organizerlist/no_image.png' %}" alt="{{ staff.name }}" style="height: 120px;width: auto" class="alignnone size-thumbnail" />
+        {% endif %}
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+{% block footer_message %}
+{% markdown %}
+メイドカフェでノマド会ではイベントオーガナイザーを募集しています。
+「メイドさんやメイドカフェと絡めて何かをやってみたい」「自分の好きなお店でメイドカフェでノマド会を開催したい」
+というような方は、ぜひ[Twitter (@maidnomad)](https://twitter.com/maidnomad)へDMでご連絡ください。
+{% endmarkdown %}
+{% endblock %}

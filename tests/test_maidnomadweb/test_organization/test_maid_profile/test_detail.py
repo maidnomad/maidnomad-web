@@ -65,7 +65,7 @@ class Testメイドさん紹介詳細ページ:
         assert (
             response.context["og_image_url"] == "/media/maidlist_thumbnail/maidchan.jpg"
         )
-        assert "no_image.png" not in str(response.content)
+        assert "maidlist/no_image.png" not in str(response.content)
 
     def test_メイン画像もサムネイルもNullの時はNoImage画像を表示すること(self, client):
 
@@ -86,7 +86,7 @@ class Testメイドさん紹介詳細ページ:
         assert response.status_code == 200
         assert response.context["image_url"] is None
         assert response.context["og_image_url"] is None
-        assert "no_image.png" in str(response.content)
+        assert "maidlist/no_image.png" in str(response.content)
 
     @pytest.mark.parametrize(
         "visible, expected_status_code",
