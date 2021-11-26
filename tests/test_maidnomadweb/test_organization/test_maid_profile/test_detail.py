@@ -156,3 +156,36 @@ class Testメイドさん紹介詳細ページ:
         # assert
         assert response.status_code == 200
         assert response.context["content"] == "&lt;script&gt;"
+
+    def test_Descriptionが設定されている時はmetaとogpのdescriptionに設定されること(self, client):
+        # fmt: off
+        # arrange
+        from factories import MaidProfileFactory
+
+        MaidProfileFactory(code="maidchan", name="メイドちゃん", description="初めましてメイドちゃんです♡")
+
+        # act
+        response = client.get("/organization/maid_profile/maidchan")
+        content = response.content.decode("UTF-8")
+
+        # assert
+        assert response.status_code == 200
+        assert '<meta name="description" content="メイドカフェでノマド会所属メイド メイドちゃん さんを紹介します。初めましてメイドちゃんです♡" />' in content
+        assert '<meta property="og:description" content="初めましてメイドちゃんです♡" />' in content
+
+    def test_Descriptionが設定されていない時はmetaとogpのdescriptionに紹介文が設定されること(self, client):
+        # fmt: off
+        # arrange
+        from factories import MaidProfileFactory
+
+        MaidProfileFactory(code="maidchan", name="メイドちゃん", description="")
+
+        # act
+        response = client.get("/organization/maid_profile/maidchan")
+        content = response.content.decode("UTF-8")
+
+        # assert
+        assert response.status_code == 200
+        print(content)
+        assert '<meta name="description" content="メイドカフェでノマド会所属メイド メイドちゃん さんを紹介します。" />' in content
+        assert '<meta property="og:description" content="メイドカフェでノマド会所属メイド メイドちゃん さんを紹介します。" />' in content

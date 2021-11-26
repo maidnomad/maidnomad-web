@@ -35,6 +35,7 @@ class MaidProfileAdmin(ExportActionMixin, ImportMixin, OrderableAdmin, VersionAd
     fields = [
         "code",
         "name",
+        "description",
         "content",
         "main_image",
         "main_image_tag",
