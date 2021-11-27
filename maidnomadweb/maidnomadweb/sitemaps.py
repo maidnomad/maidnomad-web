@@ -3,19 +3,18 @@
 # XMLレベルでドッキングしてレスポンスを返す
 # WordPressを廃止したらこのモジュールは捨てる
 
-import requests
-from apps.core.sitemaps import MaidnomadwebSitemap
-from django.http import HttpRequest, HttpResponse
-from django.conf import settings
 from xml.etree import ElementTree
 
+import requests
+from django.conf import settings
+from django.http import HttpResponse
 
 NS_SITEMAP = "http://www.sitemaps.org/schemas/sitemap/0.9"
 
 
 def joined_sitemap_index(request):
     """WordPressのブログのサイトマップと合体したサイトマップインデックスを返す
-    
+
     WordPressのサイトマップをXMLパースし、このサイトのサイトマップを挿入したサイトマップインデックスを生成する
     """
     response = requests.get(settings.BLOG_SITEMAP_URL)
@@ -27,7 +26,5 @@ def joined_sitemap_index(request):
     root = ElementTree.fromstring(response.text)
     root.insert(0, django_sitemap)
     return HttpResponse(
-        ElementTree.tostring(root, default_namespace=NS_SITEMAP),
-        "text/xml"
+        ElementTree.tostring(root, default_namespace=NS_SITEMAP), "text/xml"
     )
-

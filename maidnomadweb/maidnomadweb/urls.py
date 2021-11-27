@@ -1,20 +1,19 @@
+from apps.maidlist.sitemaps import MaidlistSitemap
+from apps.organizerlist.sitemaps import OrganizerlistSitemap
+from apps.staticpage.sitemaps import StaticpageSitemap
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.shortcuts import render
 from django.urls import include, path
-# from apps.maidlist.sitemaps import MaidlistSitemap
-# from apps.organizerlist.sitemaps import OrganizerListSitemap
-from apps.staticpage.sitemaps import StaticpageSitemap
 
 from .sitemaps import joined_sitemap_index
 
-
 sitemaps = {
-    # 'maidlist': MaidlistSitemap,
-    # 'organizerlist': OrganizerListSitemap,
     "staticpage": StaticpageSitemap,
+    "maidlist": MaidlistSitemap,
+    "organizerlist": OrganizerlistSitemap,
 }
 
 urlpatterns = [
@@ -22,14 +21,14 @@ urlpatterns = [
     path("mdeditor/", include("mdeditor.urls")),
     # サイトマップ
     path(
-        # "sitemap-.*" を WordPressに割り当てているので、 `_` にしていることに注意 
-        "sitemap_django.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"
+        # "sitemap-.*" を WordPressに割り当てているので、 `_` にしていることに注意
+        "sitemap_django.xml",
+        sitemap,
+        {"sitemaps": sitemaps},
+        name="sitemap",
     ),
     # WordPressとドッキングしたサイトマップ
-    path(
-        "sitemap.xml", joined_sitemap_index
-    ),
-    
+    path("sitemap.xml", joined_sitemap_index),
     path(
         "parts/menu_only",
         lambda request: render(request, "menu.html"),
