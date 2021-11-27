@@ -8,6 +8,8 @@ from django.urls import include, path
 # from apps.organizerlist.sitemaps import OrganizerListSitemap
 from apps.staticpage.sitemaps import StaticpageSitemap
 
+from .sitemaps import joined_sitemap_index
+
 
 sitemaps = {
     # 'maidlist': MaidlistSitemap,
@@ -18,6 +20,16 @@ sitemaps = {
 urlpatterns = [
     path("__django_admin/", admin.site.urls),
     path("mdeditor/", include("mdeditor.urls")),
+    # サイトマップ
+    path(
+        # "sitemap-.*" を WordPressに割り当てているので、 `_` にしていることに注意 
+        "sitemap_django.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"
+    ),
+    # WordPressとドッキングしたサイトマップ
+    path(
+        "sitemap.xml", joined_sitemap_index
+    ),
+    
     path(
         "parts/menu_only",
         lambda request: render(request, "menu.html"),
@@ -27,7 +39,7 @@ urlpatterns = [
         "organization/organizers_profile/",
         include(("apps.organizerlist.urls", "organizerlist")),
     ),
-    path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
+    # 静的ページ
     path("", include("apps.staticpage.urls")),
 ]
 

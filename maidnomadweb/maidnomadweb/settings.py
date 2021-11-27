@@ -201,6 +201,9 @@ MDEDITOR_CONFIGS = {
     }
 }
 
+# 旧ブログエンジンのサイトマップを取得するURL
+BLOG_SITEMAP_URL = "https://www.maid-cafe.work/index.php?xml_sitemap=params="
+
 # Logging
 LOGGING: dict[str, Any] = {
     "version": 1,
