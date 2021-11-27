@@ -20,10 +20,8 @@ def staticpage(name: str):
     def inner(request: HttpRequest) -> HttpResponse:
         staticpage = STATICPAGES[name]
 
-        breadcrumbs = None
-        if "parent" in staticpage:
-            breadcrumbs = _breadcrumbs(name)
-            del breadcrumbs[-1]["url"]
+        breadcrumbs = _breadcrumbs(name)
+        del breadcrumbs[-1]["url"]
 
         title = None
         if name != "top":
