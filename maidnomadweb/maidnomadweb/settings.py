@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sitemaps",
     "storages",
     "admin_ordering",
     "reversion",
@@ -199,6 +200,9 @@ MDEDITOR_CONFIGS = {
         "watch": False,
     }
 }
+
+# 旧ブログエンジンのサイトマップを取得するURL
+BLOG_SITEMAP_URL = "https://www.maid-cafe.work/index.php?xml_sitemap=params="
 
 # Logging
 LOGGING: dict[str, Any] = {

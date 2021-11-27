@@ -10,3 +10,4 @@ markdown
 bleach
 bleach_allowlist
 django-mdeditor
+requests

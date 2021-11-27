@@ -13,3 +13,5 @@ freezegun
 types-bleach
 types-freezegun
 types-Markdown
+types-pytz
+types-requests
