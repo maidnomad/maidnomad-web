@@ -96,4 +96,14 @@ PRの前に必ず実施してください。
 
 ## デプロイ方法
 
-TBD
+`stg` ブランチにマージし、CIがOKの場合は、ステージングサイトにリリースされます。
+
+https://staging.maid-cafe.work/
+
+`main` にマージすると本番にリリースされます。
+
+https://www.maid-cafe.work/
+
+`main` への直接コミットは禁止されています。
+
+必ず Pull Request を出してレビューを受けてからマージしてください。
