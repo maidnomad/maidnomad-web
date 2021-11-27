@@ -1,0 +1,26 @@
+/* header-css */
+
+.site-header {
+    background: url(site-header.jpg) no-repeat scroll top;
+    background-size: 1600px auto;
+}
+.site-title,
+.site-description {
+    color: #dd3333;
+}
+
+/* custom-css */
+
+h1 {
+    font-size: 40px;
+}
+
+ul#organizer_list-thumbnail,
+ul#maidnomad-maid-thumbnail{
+    list-style-type: none;
+}
+
+ul#organizer_list-thumbnail li,
+ul#maidnomad-maid-thumbnail li {
+    display: inline;
+}
