@@ -20,6 +20,7 @@ class StaffProfileResource(resources.ModelResource):
             "content",
             "thumbnail_image",
             "main_image",
+            "og_image",
             "visible",
             "order",
         ]

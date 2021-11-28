@@ -11,3 +11,4 @@ bleach
 bleach_allowlist
 django-mdeditor
 requests
+beautifulsoup4
