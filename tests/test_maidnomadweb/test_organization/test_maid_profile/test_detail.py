@@ -24,7 +24,7 @@ class Testメイドさん紹介詳細ページ:
         assert response.context["image_url"] == "/media/maidlist_main/maidchan.jpg"
         assert response.context["og_image_url"] == "/media/maidlist_ogp/maidchan_og.jpg"
 
-    def test_OGPが設定されていない時はサムネイル画像が表示されること(self, client):
+    def test_OG画像が設定されていない時はサムネイル画像が表示されること(self, client):
         # arrange
         from factories import MaidProfileFactory
 
@@ -44,6 +44,25 @@ class Testメイドさん紹介詳細ページ:
         assert (
             response.context["og_image_url"] == "/media/maidlist_thumbnail/maidchan.jpg"
         )
+
+    def test_OG画像もサムネイル画像も設定されていない時はメイン画像が表示されること(self, client):
+        # arrange
+        from factories import MaidProfileFactory
+
+        MaidProfileFactory(
+            code="maidchan",
+            name="メイドちゃん",
+            main_image__filename="maidchan.jpg",
+            thumbnail_image__filename=None,
+            og_image=None,
+        )
+
+        # act
+        response = client.get("/organization/maid_profile/maidchan")
+
+        # assert
+        assert response.status_code == 200
+        assert response.context["og_image_url"] == "/media/maidlist_main/maidchan.jpg"
 
     def test_メイン画像がNullの時はサムネイル画像を表示すること(self, client):
         # arrange

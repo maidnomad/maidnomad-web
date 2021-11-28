@@ -29,5 +29,5 @@
     {{block.super}}
 
     {# ボタンが多く画面領域が狭くなってしまうので「追加」ボタンの表示を「メイドさん自己紹介 を追加する」から簡潔にした。 #}
-    <script>django.jQuery(".object-tools .addlink").text("追加")</script>
+    <script id="replace-add-button-text" type="text/javascript">django.jQuery(".object-tools .addlink").text("追加")</script>
 {% endblock %}
