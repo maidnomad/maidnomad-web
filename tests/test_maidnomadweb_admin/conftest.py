@@ -60,8 +60,6 @@ def submit_from_soup(
     if data is None:
         data = {}
 
-    response = self.get(path, follow=True)
-    soup = BeautifulSoup(response.content, "html.parser")
     # form tag must <form>
     form = soup.select_one(selector)
     assert form is not None, "レスポンスにformタグが見つかりません"
@@ -74,9 +72,9 @@ def submit_from_soup(
     print("method: ", method)
     print("data:", form_data)
 
-    if method == "post":
+    if method.lower() == "post":
         return self.post(action, form_data, follow=True)
-    if method == "get":
+    if method.lower() == "get":
         return self.get(action, form_data, follow=True)
     raise Exception("unknown mehood: " + method)
 
@@ -91,11 +89,11 @@ def _get_action_method_data_from_formtag(form: Tag, path: str):
     :return: action, method, data
     """
     action = form.get("action")
-    if action is None:
+    if not action:
         action = path
         logger.debug("action was not set so submit: %s", path)
     method = form.get("method")
-    if method is None:
+    if not method:
         method = "get"
         logger.debug("method was not set so set get")
 

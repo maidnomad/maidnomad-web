@@ -87,6 +87,14 @@ def test_エクスポートアクションを実行するとJSONがダウンロ�
         "visible",
         "order",
     }
+    assert [
+        {key: value for key, value in data.items() if key in ["code", "name", "order"]}
+        for data in json_data
+    ] == [
+        {"code": "maidsan", "name": "メイドさん", "order": 10},
+        {"code": "maidchan", "name": "メイドちゃん", "order": 20},
+        {"code": "maidsama", "name": "メイドさま", "order": 30},
+    ]
 
 
 @pytest.mark.django_db
