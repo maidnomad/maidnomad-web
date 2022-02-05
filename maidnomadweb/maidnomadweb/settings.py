@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "admin_ordering",
     "reversion",
     "import_export",
+    "apps.chousei",
     "apps.core",
     "apps.staticpage",
     "apps.stafflist",

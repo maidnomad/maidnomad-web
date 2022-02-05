@@ -33,6 +33,9 @@ urlpatterns = [
         "parts/menu_only",
         lambda request: render(request, "menu.html"),
     ),
+    # 調整
+    path("chousei/", include(("apps.chousei.urls", "chousei"))),
+    # プロフィールページ
     path("organization/maid_profile/", include(("apps.maidlist.urls", "maidlist"))),
     path(
         "organization/organizers_profile/",

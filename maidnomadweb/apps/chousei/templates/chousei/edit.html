@@ -1,0 +1,43 @@
+{{ event.event_name }}
+
+{% if is_add %}
+<form action="{% url 'chousei:add' event.key %}" method="post">
+{% else %}
+<form action="{% url 'chousei:edit' event.key person.pk %}" method="post">
+{% endif %}
+    {{ form.non_field_errors }}
+    {% csrf_token %}
+    <div class="field">
+        {{ form.name.label_tag }}
+        {{ form.name }}
+        <span class="helptext">{{ form.name.help_text }}</span>
+        {{ form.name.errors }}
+    </div>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>日時</th>
+                <th>回答</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for field in form.eventdate_fields %}
+            <tr>
+                <td>{{ field.name }}</td>
+                <td>{{ field }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="field">
+        {{ form.comment.label_tag }}
+        {{ form.comment }}
+        <span class="helptext">{{ form.comment.help_text }}</span>
+        {{ form.comment.errors }}
+    </div>
+
+    <button type="submit">登録</button>
+
+</form>

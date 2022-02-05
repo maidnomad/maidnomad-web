@@ -1,0 +1,32 @@
+{{ event.event_name }}
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>日時</th>
+            {% for person in event_people %}
+                <th><a href="{% url 'chousei:edit' event.key person.pk %}">{{ person.name }}</a></th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for event_date_answer in event_date_answer %}
+        <tr>
+            <td>{{ event_date_answer.start_datetime }}</td>
+            {% for answer in event_date_answer.answers %}
+                <td>{{ answer }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+            {% for person in event_people %}
+                <td>{{ person.comment }}</td>
+            {% endfor %}
+        </tr>      
+    </tfoot>
+</table>
+
+<a href="{% url 'chousei:add' event.key %}">出欠を入力する</a>
