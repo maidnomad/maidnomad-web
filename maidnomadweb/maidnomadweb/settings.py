@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import locale
 from os import environ
 from pathlib import Path
 from typing import Any
@@ -141,6 +142,8 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = "ja-JP"
 
 TIME_ZONE = "Asia/Tokyo"
+
+locale.setlocale(locale.LC_TIME, "ja_JP.UTF-8")
 
 USE_I18N = True
 
