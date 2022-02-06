@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 @pytest.fixture
 def index_soup(client_superuser_loggedin):
-    from factories import OrganizerProfileFactory
+    from factories.organizerlist import OrganizerProfileFactory
 
     OrganizerProfileFactory(
         pk=101, code="orgtaro", name="オーガナイザー太郎", order=20, visible=True

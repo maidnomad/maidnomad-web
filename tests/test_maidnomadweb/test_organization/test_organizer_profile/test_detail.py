@@ -5,7 +5,7 @@ import pytest
 class Testオーガナイザー紹介詳細ページ:
     def test_オーガナイザーの名前と画像が表示されること(self, client):
         # arrange
-        from factories import OrganizerProfileFactory
+        from factories.organizerlist import OrganizerProfileFactory
 
         OrganizerProfileFactory(
             code="orgtaro",
@@ -29,7 +29,7 @@ class Testオーガナイザー紹介詳細ページ:
 
     def test_OGPが設定されていない時はサムネイル画像が表示されること(self, client):
         # arrange
-        from factories import OrganizerProfileFactory
+        from factories.organizerlist import OrganizerProfileFactory
 
         OrganizerProfileFactory(
             code="orgtaro",
@@ -51,7 +51,7 @@ class Testオーガナイザー紹介詳細ページ:
 
     def test_メイン画像がNullの時はサムネイル画像を表示すること(self, client):
         # arrange
-        from factories import OrganizerProfileFactory
+        from factories.organizerlist import OrganizerProfileFactory
 
         OrganizerProfileFactory(
             code="orgtaro",
@@ -78,7 +78,7 @@ class Testオーガナイザー紹介詳細ページ:
     def test_メイン画像もサムネイルもNullの時はNoImage画像を表示すること(self, client):
 
         # arrange
-        from factories import OrganizerProfileFactory
+        from factories.organizerlist import OrganizerProfileFactory
 
         OrganizerProfileFactory(
             code="orgtaro",
@@ -106,7 +106,7 @@ class Testオーガナイザー紹介詳細ページ:
     def test_非表示に設定されている時は404を返すこと(self, client, visible, expected_status_code):
 
         # arrange
-        from factories import OrganizerProfileFactory
+        from factories.organizerlist import OrganizerProfileFactory
 
         OrganizerProfileFactory(
             code="orgtaro",
@@ -141,7 +141,7 @@ class Testオーガナイザー紹介詳細ページ:
 </ul>
 """.strip()
 
-        from factories import OrganizerProfileFactory
+        from factories.organizerlist import OrganizerProfileFactory
 
         OrganizerProfileFactory(code="orgtaro", content=content)
 
@@ -154,7 +154,7 @@ class Testオーガナイザー紹介詳細ページ:
 
     def test_MarkDownの中に危険なHTMLがある場合はサニタイズすること(self, client):
         # arrange
-        from factories import OrganizerProfileFactory
+        from factories.organizerlist import OrganizerProfileFactory
 
         OrganizerProfileFactory(code="orgtaro", content="<script>")
 
@@ -167,7 +167,7 @@ class Testオーガナイザー紹介詳細ページ:
 
     def test_Descriptionが設定されている時はmetaとogpのdescriptionに設定されること(self, client):
         # arrange
-        from factories import OrganizerProfileFactory
+        from factories.organizerlist import OrganizerProfileFactory
 
         OrganizerProfileFactory(
             code="orgtaro", name="オーガナイザー太郎", description="初めましてオーガナイザー太郎でござる"
@@ -189,7 +189,7 @@ class Testオーガナイザー紹介詳細ページ:
 
     def test_Descriptionが設定されていない時はmetaとogpのdescriptionに紹介文が設定されること(self, client):
         # arrange
-        from factories import OrganizerProfileFactory
+        from factories.organizerlist import OrganizerProfileFactory
 
         OrganizerProfileFactory(code="orgtaro", name="オーガナイザー太郎", description="")
 
