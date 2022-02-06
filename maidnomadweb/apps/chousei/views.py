@@ -93,7 +93,6 @@ def add(request: HttpRequest, key: str):
         "chousei/edit.html",
         {
             "event": event,
-            "event_dates": event_dates,
             "form": form,
         },
     )
@@ -119,7 +118,6 @@ def edit(request: HttpRequest, key: str, person_id: int):
         "chousei/edit.html",
         {
             "event": event,
-            "event_dates": event_dates,
             "person": person,
             "form": form,
         },

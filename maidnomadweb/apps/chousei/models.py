@@ -43,7 +43,7 @@ class EventDate(Model):
 class EventPerson(Model):
     event = ForeignKey(Event, on_delete=CASCADE)
     name = CharField("名前", max_length=40)
-    comment = TextField("コメント")
+    comment = TextField("コメント", blank=True)
     created_at = DateTimeField(auto_now_add=True)
     updated_at = DateTimeField(auto_now=True)
 

@@ -2,6 +2,7 @@ from typing import Iterable
 
 from django import forms
 from django.db import transaction
+from django.utils import timezone
 
 from .choises import SCHEDULE_ANSWER_CHOISE
 from .models import EventDate, EventPerson, Schedule
@@ -39,24 +40,34 @@ def generate_chousei_form_class(
 ) -> type[ChouseiFormBase]:
     """イベント参加者情報と指定した候補日リストの回答を入力できるフォームクラスを生成します"""
 
-    # 動的に追加するフィールド名
-    new_fieldnames = [_event_date_fieldname(event_date) for event_date in event_dates]
+    # 動的に追加するフィールド名とラベル
+    new_fieldname_labels = [
+        (
+            _event_date_fieldname(event_date),
+            timezone.localtime(event_date.start_datetime).strftime(
+                "%Y/%m/%d(%a) %H:%M"
+            ),
+        )
+        for event_date in event_dates
+    ]
     # 動的にスケジュール回答選択フィールドを追加
     new_fields = {
         field_name: forms.ChoiceField(
-            choices=SCHEDULE_ANSWER_CHOISE, widget=forms.widgets.RadioSelect
+            choices=SCHEDULE_ANSWER_CHOISE,
+            widget=forms.widgets.RadioSelect,
+            label=label,
         )
-        for field_name in new_fieldnames
+        for field_name, label in new_fieldname_labels
     }
 
     # 抽象メソッドを oveeride する関数
     def schedule_answer_fields(self):
-        return [self[field_name] for field_name in new_fieldnames]
+        return [self[field_name] for field_name, _ in new_fieldname_labels]
 
     @transaction.atomic
     def save_chousei_schedules(self):
         self.save()
-        for field_name in new_fieldnames:
+        for field_name, _ in new_fieldname_labels:
             eventdate_id = int(field_name.split("_")[1])
             answer_value = self.cleaned_data[field_name]
             Schedule.objects.update_or_create(
