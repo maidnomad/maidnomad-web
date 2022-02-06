@@ -1,5 +1,3 @@
-import imp
-
 from django.db.models import CASCADE, ForeignKey, Model
 from django.db.models.fields import (
     CharField,
@@ -8,7 +6,8 @@ from django.db.models.fields import (
     TextField,
 )
 from django.utils import timezone
-from .choises import SCHEDULE_CHOISE
+
+from .choises import SCHEDULE_ANSWER_CHOISE
 
 
 class Event(Model):
@@ -21,16 +20,24 @@ class Event(Model):
     def __str__(self):
         return self.event_name
 
+    class Meta:
+        verbose_name = "イベント"
+        verbose_name_plural = "イベント"
+        ordering = ["pk"]
+
 
 class EventDate(Model):
     event = ForeignKey(Event, on_delete=CASCADE)
     start_datetime = DateTimeField("開始日時")
 
-    class Meta:
-        unique_together = ("event", "start_datetime")
-
     def __str__(self):
         return timezone.localtime(self.start_datetime).strftime("%Y/%m/%d %H:%m")
+
+    class Meta:
+        verbose_name = "イベント候補日"
+        verbose_name_plural = "イベント候補日"
+        unique_together = ("event", "start_datetime")
+        ordering = ["pk"]
 
 
 class EventPerson(Model):
@@ -40,14 +47,22 @@ class EventPerson(Model):
     created_at = DateTimeField(auto_now_add=True)
     updated_at = DateTimeField(auto_now=True)
 
+    class Meta:
+        verbose_name = "イベント参加者"
+        verbose_name_plural = "イベント参加者"
+        ordering = ["pk"]
+
 
 class Schedule(Model):
     event_person = ForeignKey(EventPerson, on_delete=CASCADE)
     event_date = ForeignKey(EventDate, on_delete=CASCADE)
     answer = IntegerField(
         "回答",
-        choices=SCHEDULE_CHOISE,
+        choices=SCHEDULE_ANSWER_CHOISE,
     )
 
     class Meta:
+        verbose_name = "スケジュール回答"
+        verbose_name_plural = "スケジュール回答"
         unique_together = ("event_person", "event_date")
+        ordering = ["pk"]

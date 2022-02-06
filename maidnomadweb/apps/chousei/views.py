@@ -1,13 +1,18 @@
+from datetime import datetime
+from typing import Iterable, TypedDict
+
 from django.http import HttpRequest
-from django.shortcuts import get_object_or_404, render, redirect
-from django.db import transaction
+from django.shortcuts import get_object_or_404, redirect, render
 
-from .models import Event, EventDate, EventPerson, Schedule
 from .forms import generate_chousei_form_class
-from .choises import SCHEDULE_CHOISE
+from .models import Event, EventDate, EventPerson, Schedule
 
 
-def _get_event_info(key: str):
+def _get_event_info(key: str) -> tuple[Event, Iterable[EventDate]]:
+    """イベント基本情報を返します
+
+    :return: (イベント情報, イベント候補日)
+    """
     event = get_object_or_404(Event, key=key)
     event_dates = event.eventdate_set.all().order_by(
         "start_datetime",
@@ -15,57 +20,72 @@ def _get_event_info(key: str):
     return event, event_dates
 
 
+class EventDateAnswer(TypedDict):
+    """イベント日付ごとの回答リスト"""
+
+    start_datetime: datetime
+    answer_list: list[str]
+
+
+def _get_event_date_answer_list(
+    event_dates: Iterable[EventDate],
+    event_people: Iterable[EventPerson],
+    schedules: Iterable[Schedule],
+) -> list[EventDateAnswer]:
+    """イベント日付と回答リストを返す
+
+    :return:
+        event_datesと同じ順番で EventDateAnswer のリストを返す。
+        また、EventDateAnswer.answer_list の順番は event_people と同じ順番とする。
+    """
+    # (イベント参加者, 候補日) -> 辞書を作成
+    answer_dict = {
+        (s.event_person.pk, s.event_date.pk): s.get_answer_display() for s in schedules
+    }
+    event_date_answer_list: list[EventDateAnswer] = []
+    for event_date in event_dates:
+        # event_people と同じ順番で回答リストを作成
+        answer_list = [
+            answer_dict.get((event_person.pk, event_date.pk), "")
+            for event_person in event_people
+        ]
+        event_date_answer = EventDateAnswer(
+            start_datetime=event_date.start_datetime, answer_list=answer_list
+        )
+        event_date_answer_list.append(event_date_answer)
+
+    return event_date_answer_list
+
+
 def view(request: HttpRequest, key: str):
+    """イベント表示画面"""
     event, event_dates = _get_event_info(key)
     event_people = event.eventperson_set.all()
-    schedules = Schedule.objects.filter(
-        event_person__event = event,
+    schedules = Schedule.objects.filter(event_person__event=event)
+    event_date_answer_list = _get_event_date_answer_list(
+        event_dates, event_people, schedules
     )
-    answer_dict = {
-        (schedule.event_person.pk, schedule.event_date.pk): schedule.answer
-        for schedule in schedules
-    }
-    event_date_answer = [
-        {
-            "start_datetime": event_date.start_datetime,
-            "answers": [
-                dict(SCHEDULE_CHOISE).get(
-                    answer_dict.get((event_person.pk, event_date.pk)),
-                    ""
-                )
-                for event_person in event_people
-            ]
-        }
-        for event_date in event_dates
-    ]
     return render(
         request,
         "chousei/view.html",
         {
             "event": event,
-            "event_date_answer": event_date_answer,
+            "event_date_answer_list": event_date_answer_list,
             "event_people": event_people,
         },
     )
 
 
 def add(request: HttpRequest, key: str):
+    """イベント回答追加画面"""
     event, event_dates = _get_event_info(key)
-    ChouseiForm = generate_chousei_form_class(
-        [event_date.pk for event_date in event_dates]
-    )
+    ChouseiForm = generate_chousei_form_class(event_dates)
     if request.method == "POST":
         form = ChouseiForm(data=request.POST)
         if form.is_valid():
             form.instance.event = event
-            with transaction.atomic():
-                form.save()
-                for event_dates_field in form.eventdate_fields():
-                    eventdate_id = int(event_dates_field.name.split("_")[1])
-                    value = form.cleaned_data[event_dates_field.name]
-                    schedule = Schedule(event_person=form.instance, event_date_id=eventdate_id, answer=value)
-                    schedule.save()
-                return redirect("chousei:view", key)
+            form.save_chousei_schedules()
+            return redirect("chousei:view", key)
     else:
         form = ChouseiForm()
     return render(
@@ -75,50 +95,32 @@ def add(request: HttpRequest, key: str):
             "event": event,
             "event_dates": event_dates,
             "form": form,
-            "is_add": True,
         },
     )
 
 
 def edit(request: HttpRequest, key: str, person_id: int):
+    """イベント回答編集画面"""
     event, event_dates = _get_event_info(key)
-    ChouseiForm = generate_chousei_form_class(
-        [event_date.pk for event_date in event_dates]
-    )
     person = get_object_or_404(EventPerson, event=event, pk=person_id)
+    ChouseiForm = generate_chousei_form_class(event_dates)
     if request.method == "POST":
         form = ChouseiForm(instance=person, data=request.POST)
         if form.is_valid():
-            form.instance.event = event
-            form.instance.pk = person_id
-            with transaction.atomic():
-                form.save()
-                for event_dates_field in form.eventdate_fields():
-                    eventdate_id = int(event_dates_field.name.split("_")[1])
-                    value = form.cleaned_data[event_dates_field.name]
-                    try:
-                        schedule = Schedule.objects.get(event_person=form.instance, event_date_id=eventdate_id)
-                    except Schedule.DoesNotExist:
-                        schedule = Schedule(event_person=form.instance, event_date_id=eventdate_id)
-                    schedule.answer = value
-                    schedule.save()
-                return redirect("chousei:view", key)
+            form.save_chousei_schedules()
             return redirect("chousei:view", key)
+
     else:
         form = ChouseiForm(instance=person)
-        schedules = person.schedule_set.all()
-        for schedule in schedules:
-            field = form.fields.get(f"eventdate_{schedule.event_date_id}")
-            field.initial = schedule.answer
-    
+        form.retrieve_instance_schedules()
+
     return render(
         request,
         "chousei/edit.html",
         {
             "event": event,
             "event_dates": event_dates,
-            "form": form,
             "person": person,
-            "is_add": False,
+            "form": form,
         },
     )

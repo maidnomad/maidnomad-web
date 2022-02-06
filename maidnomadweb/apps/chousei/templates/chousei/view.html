@@ -10,10 +10,10 @@
         </tr>
     </thead>
     <tbody>
-        {% for event_date_answer in event_date_answer %}
+        {% for event_date_answer in event_date_answer_list %}
         <tr>
             <td>{{ event_date_answer.start_datetime }}</td>
-            {% for answer in event_date_answer.answers %}
+            {% for answer in event_date_answer.answer_list %}
                 <td>{{ answer }}</td>
             {% endfor %}
         </tr>

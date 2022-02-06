@@ -16,8 +16,12 @@ class EventAdminForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self._retrieve_dates_textarea()
+
+    def _retrieve_dates_textarea(self):
+        """dates テキストエリアに eventdate を展開する"""
         if self.instance.pk:
-            # 更新の時、dates フィールドに eventdate を展開する
+            # 更新の時のみ
             initial_dates = "\n".join(
                 sorted(
                     [
@@ -55,20 +59,57 @@ class EventAdminForm(forms.ModelForm):
                 raise ValidationError(f"日付のフォーマットが不正です {date_row}")
         return cleaned_dates_set
 
-    def _parse_datetime(self, value):
+    def _parse_datetime(self, value) -> datetime:
+        """テキストエリアに入力された1行分の日付をパースする
+
+        デフォルト時刻が設定されている場合は日付を省略した場合デフォルト時刻でパースする
+        """
         try:
             return datetime.strptime(value, "%Y/%m/%d %H:%M")
-        except:
+        except ValueError:
             pass
-        cleaned_time = self.cleaned_data.get("default_time")
-        if cleaned_time:
+        default_time = self.cleaned_data.get("default_time")
+        if default_time:
             try:
                 value_date = datetime.strptime(value, "%Y/%m/%d")
-                value_date = datetime.combine(value_date, cleaned_time)
+                value_date = datetime.combine(value_date, default_time)
                 return value_date
-            except:
+            except ValueError:
                 pass
-        raise ValueError(f"cannot parse datetime value: {value}")
+        raise ValueError(
+            f"cannot parse datetime value: {value}, default_time: {default_time}"
+        )
+
+    def set_instance_key_random(self):
+        """インスタンスにランダムkeyをセットする"""
+        # uuid4をsha256にした値
+        self.instance.key = sha256(uuid4().bytes).hexdigest()
+
+    def save_event_dates(self):
+        """登録されたデータをもとに、instanceに紐づくEventDateを登録・更新・削除する
+
+        以下のルールで処理を行う。
+        - 登録済みで編集後に消されているものは消す
+        - 登録済みで編集後にも残っているものはなにもしない
+        - 編集後に存在し、登録済みでないものは新たに登録する
+        """
+        edited_dates_set = self.cleaned_data["dates"]
+
+        # すでに登録済みの日付集合
+        already_set_dates_set = set()
+
+        # 登録済みで編集後に消されているものは消す
+        for eventdate in self.instance.eventdate_set.all():
+            if eventdate.start_datetime not in edited_dates_set:
+                eventdate.delete()
+            else:
+                already_set_dates_set.add(eventdate.start_datetime)
+
+        # すでに登録済みでないものだけ登録する
+        for date_value in edited_dates_set:
+            if date_value not in already_set_dates_set:
+                event_date = EventDate(start_datetime=date_value)
+                self.instance.eventdate_set.add(event_date, bulk=False)
 
     class Meta:
         model = Event
@@ -83,29 +124,12 @@ class EventAdmin(admin.ModelAdmin):
     ]
     fields = ["key", "event_name", "default_time", "dates"]
 
-    def save_form(self, request, form: forms.ModelForm, change):
+    def save_form(self, request, form: EventAdminForm, change):
         if not change:
-            # 新規の時はuuid4をsha256にした値を設定
-            form.instance.key = sha256(uuid4().bytes).hexdigest()
+            # 新規の時はランダムキーを生成して設定
+            form.set_instance_key_random()
         return super().save_form(request, form, change)
 
-    def save_related(self, request, form: forms.ModelForm, formsets, change: bool):
-        edited_dates_set = form.cleaned_data["dates"]
-
-        # すでに登録済みの日付集合
-        already_set_dates_set = set()
-
-        # 登録済みで編集後に消されているものは消す
-        for eventdate in form.instance.eventdate_set.all():
-            if eventdate.start_datetime not in edited_dates_set:
-                eventdate.delete()
-            else:
-                already_set_dates_set.add(eventdate.start_datetime)
-
-        # すでに登録済みでないものだけ登録する
-        for date_value in edited_dates_set:
-            if date_value not in already_set_dates_set:
-                event_date = EventDate(start_datetime=date_value)
-                form.instance.eventdate_set.add(event_date, bulk=False)
-
+    def save_related(self, request, form: EventAdminForm, formsets, change: bool):
+        form.save_event_dates()
         return super().save_related(request, form, formsets, change)

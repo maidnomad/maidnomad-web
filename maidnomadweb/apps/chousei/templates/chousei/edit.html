@@ -1,9 +1,9 @@
 {{ event.event_name }}
 
-{% if is_add %}
-<form action="{% url 'chousei:add' event.key %}" method="post">
-{% else %}
+{% if person %}
 <form action="{% url 'chousei:edit' event.key person.pk %}" method="post">
+{% else %}
+<form action="{% url 'chousei:add' event.key %}" method="post">
 {% endif %}
     {{ form.non_field_errors }}
     {% csrf_token %}
@@ -22,7 +22,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for field in form.eventdate_fields %}
+            {% for field in form.schedule_answer_fields %}
             <tr>
                 <td>{{ field.name }}</td>
                 <td>{{ field }}</td>
