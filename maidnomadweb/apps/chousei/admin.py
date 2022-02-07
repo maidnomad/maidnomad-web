@@ -10,7 +10,14 @@ from django.utils import timezone
 from .models import Event, EventDate
 
 
+DATETIME_FORMAT = "%Y/%m/%d %H:%M"
+
+
 class EventAdminForm(forms.ModelForm):
+    class Meta:
+        model = Event
+        fields = ["key", "event_name", "memo"]
+
     default_time = forms.CharField(label="デフォルト時刻", required=False)
     dates = forms.CharField(label="候補日時", widget=forms.Textarea(), required=False)
 
@@ -26,7 +33,7 @@ class EventAdminForm(forms.ModelForm):
                 sorted(
                     [
                         timezone.localtime(eventdate.start_datetime).strftime(
-                            "%Y/%m/%d %H:%M"
+                            DATETIME_FORMAT
                         )
                         for eventdate in self.instance.eventdate_set.all()
                     ]
@@ -65,7 +72,7 @@ class EventAdminForm(forms.ModelForm):
         デフォルト時刻が設定されている場合は日付を省略した場合デフォルト時刻でパースする
         """
         try:
-            return datetime.strptime(value, "%Y/%m/%d %H:%M")
+            return datetime.strptime(value, DATETIME_FORMAT)
         except ValueError:
             pass
         default_time = self.cleaned_data.get("default_time")
@@ -111,10 +118,6 @@ class EventAdminForm(forms.ModelForm):
                 event_date = EventDate(start_datetime=date_value)
                 self.instance.eventdate_set.add(event_date, bulk=False)
 
-    class Meta:
-        model = Event
-        fields = ["key", "event_name"]
-
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
@@ -122,7 +125,7 @@ class EventAdmin(admin.ModelAdmin):
     readonly_fields = [
         "key",
     ]
-    fields = ["key", "event_name", "default_time", "dates"]
+    fields = ["key", "event_name", "memo", "default_time", "dates"]
 
     def save_form(self, request, form: EventAdminForm, change):
         if not change:
