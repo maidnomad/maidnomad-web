@@ -6,8 +6,10 @@ from django import forms
 from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.utils import timezone
+from django.utils.html import format_html
 
 from .models import Event, EventDate
+from .widgets import TextAreaWithDatepickerWidget
 
 
 DATETIME_FORMAT = "%Y/%m/%d %H:%M"
@@ -19,7 +21,11 @@ class EventAdminForm(forms.ModelForm):
         fields = ["key", "event_name", "memo"]
 
     default_time = forms.CharField(label="デフォルト時刻", required=False)
-    dates = forms.CharField(label="候補日時", widget=forms.Textarea(), required=False)
+    dates = forms.CharField(
+        label="候補日時",
+        widget=TextAreaWithDatepickerWidget(attrs={'cols': '20', 'rows': '20'}),
+        required=False,
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
