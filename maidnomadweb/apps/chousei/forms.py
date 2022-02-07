@@ -15,11 +15,11 @@ def _event_date_fieldname(event_date: EventDate):
 class ChouseiFormBase(forms.ModelForm):
     """イベント参加者情報と候補日の回答を入力するフォームの抽象基底クラス"""
 
-    def schedule_answer_fields(self) -> list[forms.BoundField]:
+    def schedule_answer_fields(self) -> list[forms.BoundField]:  # pragma: nocover
         """スケジュール回答フィールドのリストを返します"""
         raise NotImplementedError
 
-    def save_chousei_schedules(self) -> None:
+    def save_chousei_schedules(self) -> None:  # pragma: nocover
         """フィールドの設定に基づいて EventPerson に紐づく Schedule レコードを保存します"""
         raise NotImplementedError
 
