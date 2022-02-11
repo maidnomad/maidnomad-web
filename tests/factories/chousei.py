@@ -14,6 +14,7 @@ class EventFactory(factory.django.DjangoModelFactory):
 
 class EventDateFactory(factory.django.DjangoModelFactory):
     event = factory.SubFactory(EventFactory)
+
     class Meta:
         model = models.EventDate
 

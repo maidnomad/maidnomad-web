@@ -53,7 +53,7 @@ def test_イベントの更新が行えること(client_superuser_loggedin, even
         },
     )
     assert response.request["PATH_INFO"] == "/__django_admin/chousei/event/"
- 
+
     from apps.chousei.models import Event, EventDate
 
     updated_event = Event.objects.get(pk=event1.pk)
@@ -73,4 +73,3 @@ def test_イベントの更新が行えること(client_superuser_loggedin, even
     assert EventDate.objects.filter(pk=event_date1.pk).exists()
     # 登録されてない時刻は消されていること
     assert not EventDate.objects.filter(pk=event_date_to_remove.pk).exists()
-

@@ -32,7 +32,6 @@ class EventDate(Model):
 
     def __str__(self):
         return timezone.localtime(self.start_datetime).strftime("%Y/%m/%d(%a) %H:%M")
-        
 
     class Meta:
         verbose_name = "イベント候補日"
