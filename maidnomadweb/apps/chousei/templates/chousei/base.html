@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    {% block headtag_information %}
+    <title>メイドカフェでノマド会調整システム</title>
+    {% endblock %}
+    {% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'chousei/style.css' %}" type="text/css"> 
+    {% endblock %}
+    <link rel="icon" href="{% static 'maidnomad-icon-32x32.png' %}" sizes="32x32" />
+    <link rel="icon" href="{% static 'maidnomad-icon-192x192.png' %}" sizes="192x192" />
+    <link rel="apple-touch-icon" href="{% static 'maidnomad-icon-180x180.png' %}" />
+    <meta name="msapplication-TileImage" content="{% static 'maidnomad-icon-270x270.jpg' %}" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css"> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+</head>
+
+<body>
+<header>
+メイドカフェでノマド会調整システム
+</header>
+
+<div id="main-content">
+{% block content %}{% endblock %}
+</div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '{{ SITE_ADSENSE_TRACKING_ID }}', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>

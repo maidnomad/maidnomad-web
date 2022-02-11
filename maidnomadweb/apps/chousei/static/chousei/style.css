@@ -1,0 +1,286 @@
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+header {
+    background-color: rgb(147, 0, 0);
+    color:rgb(242, 212, 212);
+    font-size: 2em;
+}
+
+h1 a {
+    text-decoration: none;
+    color: initial;
+}
+
+/* clearfix */
+
+.clearfix:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+ 
+.clearfix:before {
+    content: "";
+	display: block;
+	clear: both;
+}
+ 
+.clearfix {
+	display: block;
+}
+
+/* django-form */
+.errorlist {
+    color: red;
+    list-style-type: none;
+    margin: 0px 0px;
+    padding: 0px 0px;
+}
+
+/* main-content */
+
+#main-content {
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 調整テーブル */
+
+#chousei-table {
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 75%;
+}
+
+#chousei-table table {
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 50%;
+}
+
+#chousei-table thead {
+    background-color: rgb(228, 228, 228);
+}
+
+#chousei-table table, #chousei-table th, #chousei-table td {
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+}
+
+#chousei-table th {
+    text-align: left;
+    vertical-align: top;
+}
+
+#chousei-table .chousei-date-column {
+    width: 115px;
+    max-width: 115px;
+    min-width: 50px;
+}
+
+#chousei-table td.chousei-date-value {
+    font-weight: bold;
+    background-color: rgb(246, 244, 244);
+    height: 36px;
+}
+
+#chousei-table .chousei-answer-column {
+    word-break: break-all;
+    width: 80px;
+    max-width: 200px;
+    min-width: 50px;
+}
+
+#chousei-table .chousei-answer-name {
+    font-weight: bold;
+	height: 30px;
+}
+
+#chousei-table .chousei-answer-name a {
+    text-decoration: none;
+    display: flex;
+	align-items: baseline;
+    width: 100%;
+    height: 100%;
+}
+
+#chousei-table .chousei-answer-name a:link {
+    color:rgb(171, 59, 59)
+}
+
+#chousei-table .chousei-answer-name a:visited {
+    color: rgb(177, 65, 65)
+}
+
+#chousei-table .chousei-answer-name a:hover {
+    text-decoration: underline;
+}
+
+#chousei-table .chousei-answer-value {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 160%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#chousei-table .chousei-answer-value span[data-answer-value="0"] {
+    color: rgb(199, 189, 189);
+}
+
+#chousei-table .chousei-answer-value span[data-answer-value="1"] {
+    color: rgb(215, 171, 171);
+}
+
+#chousei-table .chousei-answer-value span[data-answer-value="2"] {
+    color: rgb(230, 26, 26);
+    font-weight: 900;
+    text-shadow:
+        .8px .8px rgb(147, 0, 0),
+        -.8px .8px rgb(147, 0, 0),
+        -.8px -.8px rgb(147, 0, 0),
+        .8px -.8px rgb(147, 0, 0),
+        .8px 0px rgb(147, 0, 0),
+        0px .8px rgb(147, 0, 0),
+        -.8px 0px rgb(147, 0, 0),
+        0px -.8px rgb(147, 0, 0);
+}
+
+/* 調整入力テーブル */
+
+#chousei-input {
+    width: 450px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#chousei-input table {
+    border-collapse: collapse;;
+}
+
+#chousei-input thead {
+    background-color: rgb(228, 228, 228);
+}
+
+#chousei-input table, #chousei-input th, #chousei-input td {
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+}
+
+#chousei-input th {
+    text-align: left;
+    vertical-align: top;
+}
+
+#chousei-input form #id_name {
+    width: 360px;
+}
+
+#chousei-input form #id_comment {
+    width: 360px;
+}
+
+/* ボタン */
+
+a.button {
+    display: inline-block;
+    text-decoration: none;
+    border-style: solid;
+    background-color: rgb(206, 206, 206);
+    border-width:1px;
+    border-color: rgb(169, 169, 169);
+    padding: 4px 4px;
+    border-radius: 4px;
+}
+
+a.button:visited {
+    color: black;
+}
+
+a.button:hover {
+    color: black;
+    background-color: rgb(225, 225, 225);
+    border-color: rgb(126, 126, 126);
+}
+
+button.button {
+    border-style: solid;
+    background-color: rgb(206, 206, 206);
+    border-width:1px;
+    border-color: rgb(169, 169, 169);
+    padding: 4px 4px;
+    border-radius: 4px;
+}
+
+button.button:hover {
+    background-color: rgb(225, 225, 225);
+    border-color: rgb(126, 126, 126);
+}
+
+#chousei-button {
+    font-size: 150%;
+    padding: 8px 8px;
+    border-radius: 8px;
+}
+
+#chousei-submit-button {
+    font-size: 150%;
+    padding: 8px 8px;
+    border-radius: 8px;
+}
+
+/* 回答画面のラジオボタン */
+
+.answer-radio-group ul {
+    list-style-type: none;
+    margin-left: 0;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
+}
+.answer-radio-group ul li {
+    float: left;
+    display: flex;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid #b6b6b6;
+    margin: 4px 20px;
+    padding: 0 0
+}   
+
+.answer-radio-group ul li input {
+    /* display: none; */
+    opacity: 0;
+    margin: 4px -8px;
+}
+
+.answer-radio-group ul li label {
+    width: 26px;
+    height: 26px;
+    padding: 4px 4px;
+    margin: 0px 0px;
+    font-family: monospace;
+    border-radius: 50%;
+    vertical-align: top;
+    text-align: center;
+}
+
+.answer-radio-group ul li label.answer-radio-checked {
+    background-color: rgb(147, 0, 0);
+    color: white;
+}
+
+.answer-radio-group ul li label.answer-radio-unchecked {
+    background-color: rgb(242, 242, 242)
+}
+.answer-radio-group ul li label.answer-radio-unchecked:hover {
+    background-color: white;
+}

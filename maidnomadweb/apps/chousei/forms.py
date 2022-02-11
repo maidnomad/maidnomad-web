@@ -34,40 +34,43 @@ class ChouseiFormBase(forms.ModelForm):
         model = EventPerson
         fields = ["name", "comment"]
 
+        error_messages = {
+            "name": {
+                "required": "名前を入力してください",
+            },
+        }
+
 
 def generate_chousei_form_class(
     event_dates: Iterable[EventDate],
 ) -> type[ChouseiFormBase]:
     """イベント参加者情報と指定した候補日リストの回答を入力できるフォームクラスを生成します"""
 
-    # 動的に追加するフィールド名とラベル
-    new_fieldname_labels = [
-        (
-            _event_date_fieldname(event_date),
-            timezone.localtime(event_date.start_datetime).strftime(
-                "%Y/%m/%d(%a) %H:%M"
-            ),
-        )
-        for event_date in event_dates
-    ]
+    # 動的に追加するフィールド名とラベル、日付
+    new_fieldnames = [_event_date_fieldname(event_date) for event_date in event_dates]
     # 動的にスケジュール回答選択フィールドを追加
-    new_fields = {
-        field_name: forms.ChoiceField(
+    new_fields = {}
+    for event_date, field_name in zip(event_dates, new_fieldnames):
+        new_fields[field_name] = forms.ChoiceField(
             choices=SCHEDULE_ANSWER_CHOISE,
             widget=forms.widgets.RadioSelect,
-            label=label,
+            label=timezone.localtime(event_date.start_datetime).strftime(
+                "%Y/%m/%d(%a) %H:%M"
+            ),
+            error_messages={
+                "required": "回答を選んでください",
+            },
         )
-        for field_name, label in new_fieldname_labels
-    }
+        new_fields[field_name].start_datetime = event_date.start_datetime
 
     # 抽象メソッドを oveeride する関数
     def schedule_answer_fields(self):
-        return [self[field_name] for field_name, _ in new_fieldname_labels]
+        return [self[field_name] for field_name in new_fieldnames]
 
     @transaction.atomic
     def save_chousei_schedules(self):
         self.save()
-        for field_name, _ in new_fieldname_labels:
+        for field_name in new_fieldnames:
             eventdate_id = int(field_name.split("_")[1])
             answer_value = self.cleaned_data[field_name]
             Schedule.objects.update_or_create(

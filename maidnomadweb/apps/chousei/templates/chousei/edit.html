@@ -1,20 +1,60 @@
-{{ event.event_name }}
+{% extends "chousei/base.html" %}
+{% load static %}
+
+{% block headtag_information %}
+<title>メイドカフェでノマド会調整ツール</title>
+<meta property="og:locale" content="ja" />
+<meta property="og:type" content="article" />
+<meta property="og:image:width" content="400" />
+<meta property="og:image:height" content="399" />
+<meta property="og:image" content="{% static 'maidnomad-logo.jpg' %}" />
+<meta property="og:title" content=" - メイドカフェでノマド会調整ツール" />
+<meta name="description" content="{{ event.memo }}" />
+<meta property="og:description" content="{{ event.memo }}" />
+{% if person %}
+<link rel="canonical" href="{% url 'chousei:edit' event.key person.pk %}" />
+<meta property="og:url" content="{% url 'chousei:edit' event.key person.pk %}" />
+{% else %}
+<link rel="canonical" href="{% url 'chousei:add' event.key %}" />
+<meta property="og:url" content="{% url 'chousei:add' event.key %}" />
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<h1><a href="{% url 'chousei:view' event.key %}">{{ event.event_name }}</a></h1>
+
+<div id="chousei-input">
+
+<h2>出欠を入力する</h2>
 
 {% if person %}
-<form action="{% url 'chousei:edit' event.key person.pk %}" method="post">
+<form action="{% url 'chousei:edit' event.key person.pk %}" method="post" novalidate>
 {% else %}
-<form action="{% url 'chousei:add' event.key %}" method="post">
+<form action="{% url 'chousei:add' event.key %}" method="post" novalidate>
 {% endif %}
     {{ form.non_field_errors }}
     {% csrf_token %}
+    {% if form.non_field_errors %}
+        <ul class="alert alert-danger list-unstyled">
+            <li style="list-style-type: none;">
+        <ul class="alert alert-danger list-unstyled">{% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+        </ul>
+        </li>
+        </ul>
+        {% endfor %}
+
+    {% endif %}
+
+    <h3>名前</h3>
     <div class="field">
-        {{ form.name.label_tag }}
         {{ form.name }}
         <span class="helptext">{{ form.name.help_text }}</span>
         {{ form.name.errors }}
     </div>
 
-    <table border="1">
+    <h3>日程候補</h3>
+    <table>
         <thead>
             <tr>
                 <th>日時</th>
@@ -24,20 +64,47 @@
         <tbody>
             {% for field in form.schedule_answer_fields %}
             <tr>
-                <td>{{ field.label }}</td>
-                <td>{{ field }}</td>
+                <td>
+                    {{ field.field.start_datetime|date:"n/j(D) H:i" }}〜
+                </td>
+                <td>
+                    <div class="answer-radio-group clearfix">
+                        {{ field }}
+                    </div>
+                    {{ field.errors }}
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
+    <h3>コメント</h3>
     <div class="field">
-        {{ form.comment.label_tag }}
         {{ form.comment }}
-        <span class="helptext">{{ form.comment.help_text }}</span>
-        {{ form.comment.errors }}
     </div>
 
-    <button type="submit">登録</button>
-
+    <button type="submit" class="button" id="chousei-submit-button">登録</button>
 </form>
+</div>
+
+<script>
+    function applyAnswerRadioChecked() {
+        $(".answer-radio-group label").removeClass(
+            "answer-radio-checked"
+        );
+        $(".answer-radio-group label").addClass(
+            "answer-radio-unchecked"
+        );
+        $(".answer-radio-group label:has(input:checked)").removeClass(
+            "answer-radio-unchecked"
+        );
+        $(".answer-radio-group label:has(input:checked)").addClass(
+            "answer-radio-checked"
+        );
+    }
+    $(".answer-radio-group label").on("click", applyAnswerRadioChecked);
+    $(applyAnswerRadioChecked)
+</script>
+
+{% include "adsense_box.html" %}
+{% endblock %}

@@ -40,7 +40,11 @@ def _get_event_date_answer_list(
     """
     # (イベント参加者, 候補日) -> 辞書を作成
     answer_dict = {
-        (s.event_person.pk, s.event_date.pk): s.get_answer_display() for s in schedules
+        (schedule.event_person.pk, schedule.event_date.pk): {
+            "value": schedule.answer,
+            "display": schedule.get_answer_display(),
+        }
+        for schedule in schedules
     }
     event_date_answer_list: list[EventDateAnswer] = []
     for event_date in event_dates:
@@ -50,7 +54,8 @@ def _get_event_date_answer_list(
             for event_person in event_people
         ]
         event_date_answer = EventDateAnswer(
-            start_datetime=event_date.start_datetime, answer_list=answer_list
+            start_datetime=event_date.start_datetime,
+            answer_list=answer_list,
         )
         event_date_answer_list.append(event_date_answer)
 

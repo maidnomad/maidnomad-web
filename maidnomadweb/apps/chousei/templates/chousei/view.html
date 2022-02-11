@@ -1,32 +1,74 @@
-{{ event.event_name }}
+{% extends "chousei/base.html" %}
+{% load static %}
 
-<table border="1">
-    <thead>
-        <tr>
-            <th>日時</th>
-            {% for person in event_people %}
-                <th><a href="{% url 'chousei:edit' event.key person.pk %}">{{ person.name }}</a></th>
-            {% endfor %}
-        </tr>
-    </thead>
-    <tbody>
-        {% for event_date_answer in event_date_answer_list %}
-        <tr>
-            <td>{{ event_date_answer.start_datetime }}</td>
-            {% for answer in event_date_answer.answer_list %}
-                <td>{{ answer }}</td>
-            {% endfor %}
-        </tr>
-        {% endfor %}
-    </tbody>
-    <tfoot>
-        <tr>
-            <td></td>
-            {% for person in event_people %}
-                <td>{{ person.comment }}</td>
-            {% endfor %}
-        </tr>      
-    </tfoot>
-</table>
+{% block headtag_information %}
+    <title>メイドカフェでノマド会調整ツール</title>
+    <meta property="og:locale" content="ja" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image:width" content="400" />
+    <meta property="og:image:height" content="399" />
+    <meta property="og:image" content="{% static 'maidnomad-logo.jpg' %}" />
+    <meta property="og:title" content=" - メイドカフェでノマド会調整ツール" />
+    <meta name="description" content="{{ event.memo }}" />
+    <meta property="og:description" content="{{ event.memo }}" />
+    <link rel="canonical" href="{% url 'chousei:view' event.key %}" />
+    <meta property="og:url" content="{% url 'chousei:view' event.key %}" />
+{% endblock %}
 
-<a href="{% url 'chousei:add' event.key %}">出欠を入力する</a>
+{% block content %}
+<h1>{{ event.event_name }}</h1>
+
+<div>
+<p>{{ event.memo }}</p>
+</div>
+
+<div id="chousei-table">
+    <table>
+        <thead>
+            <tr>
+                <th class="chousei-date-column">日程</th>
+                {% for person in event_people %}
+                    <th class="chousei-answer-column chousei-answer-name cell-link">
+                        <a href="{% url 'chousei:edit' event.key person.pk %}">
+                            {{ person.name }}
+                        </a>
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for event_date_answer in event_date_answer_list %}
+            <tr>
+                <td class="chousei-date-column chousei-date-value">
+                    {{ event_date_answer.start_datetime|date:"n/j(D) H:i" }}〜
+                </td>
+                {% for answer in event_date_answer.answer_list %}
+                    <td class="chousei-answer-column chousei-answer-value">
+                        <span data-answer-value="{{ answer.value }}">{{ answer.display }}</span>
+                    </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                {% for person in event_people %}
+                    <td class="chousei-answer-column">{{ person.comment }}</td>
+                {% endfor %}
+            </tr>      
+        </tfoot>
+    </table>
+</div>
+
+<div>
+    <p style="text-align: center;">
+        <a id="chousei-button" class="button" href="{% url 'chousei:add' event.key %}">出欠を入力する</a>
+    </p>
+</div>
+
+<div>    
+    {% include "adsense_box.html" %}
+</div>
+
+{% endblock %}
