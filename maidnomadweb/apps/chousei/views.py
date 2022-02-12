@@ -3,9 +3,11 @@ from typing import Iterable, TypedDict
 
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 
 from .forms import generate_chousei_form_class
 from .models import Event, EventDate, EventPerson, Schedule
+from . import notify
 
 
 def _get_event_info(key: str) -> tuple[Event, Iterable[EventDate]]:
@@ -90,6 +92,14 @@ def add(request: HttpRequest, key: str):
         if form.is_valid():
             form.instance.event = event
             form.save_chousei_schedules()
+            notify.event_schedule_added(
+                to={
+                    "slack_user": event.slack_notification_user
+                },
+                event_name=event.event_name,
+                event_url=reverse("chousei:view", kwargs={"key": event.key}),
+                name=form.cleaned_data["name"]
+            )
             return redirect("chousei:view", key)
     else:
         form = ChouseiForm()
@@ -112,6 +122,14 @@ def edit(request: HttpRequest, key: str, person_id: int):
         form = ChouseiForm(instance=person, data=request.POST)
         if form.is_valid():
             form.save_chousei_schedules()
+            notify.event_schedule_updated(
+                to={
+                    "slack_user": event.slack_notification_user
+                },
+                event_name=event.event_name,
+                event_url=reverse("chousei:view", kwargs={"key": event.key}),
+                name=form.cleaned_data["name"]
+            )
             return redirect("chousei:view", key)
 
     else:

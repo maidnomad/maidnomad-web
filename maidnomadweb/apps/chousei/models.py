@@ -14,6 +14,23 @@ class Event(Model):
     key = CharField("キー", max_length=128, unique=True)
     event_name = CharField("イベント名", max_length=100)
     memo = TextField("メモ", blank=True)
+    code_style = """
+font-family: monospace;
+background-color: rgb(240, 240, 240);
+font-weight: bold;
+padding: 0 0.5em;
+"""
+    slack_notification_user = CharField(
+        "Slack 通知先ユーザー名",
+        help_text=f"""
+ユーザー名、メンバーID、チャンネル名をカンマ区切りで複数指定できます。<br />
+ユーザー名は<code style='{code_style}'>@</code>,
+チャンネル名は<code style='{code_style}'>#</code>をつけてください。<br />
+ユーザー名は表示名・フルネームとは異なるので注意してください。""",
+        max_length=255,
+        blank=True,
+        default=""
+    )
     created_at = DateTimeField(auto_now_add=True)
     updated_at = DateTimeField(auto_now=True)
 

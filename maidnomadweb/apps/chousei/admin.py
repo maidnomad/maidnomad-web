@@ -19,7 +19,7 @@ DATETIME_FORMAT = "%Y/%m/%d %H:%M"
 class EventAdminForm(forms.ModelForm):
     class Meta:
         model = Event
-        fields = ["key", "event_name", "memo"]
+        fields = ["key", "event_name", "slack_notification_user", "memo"]
 
     default_time = forms.CharField(label="デフォルト時刻", required=False)
     dates = forms.CharField(
@@ -32,6 +32,7 @@ class EventAdminForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self._retrieve_dates_textarea()
         self.fields["event_name"].widget.attrs = {"size": "94"}
+        self.fields["slack_notification_user"].widget.attrs = {"size": "68"}
 
     def _retrieve_dates_textarea(self):
         """dates テキストエリアに eventdate を展開する"""
@@ -160,7 +161,7 @@ function copyUrl() {{
     readonly_fields = [
         "chousei_url_tag",
     ]
-    fields = ["chousei_url_tag", "event_name", "memo", "default_time", "dates"]
+    fields = ["chousei_url_tag", "event_name", "slack_notification_user", "memo", "default_time", "dates"]
 
     def save_form(self, request, form: EventAdminForm, change):
         if not change:
