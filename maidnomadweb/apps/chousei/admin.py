@@ -130,6 +130,8 @@ class EventAdminForm(forms.ModelForm):
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
     def chousei_url_tag(self, obj):
+        if not obj.key:
+            return ""
         url = settings.SITE_ROOT_URL + reverse("chousei:view", kwargs={"key": obj.key})
         return format_html(
             """
