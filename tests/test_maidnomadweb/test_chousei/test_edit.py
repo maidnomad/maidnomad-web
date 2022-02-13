@@ -92,9 +92,9 @@ def test_Eventに紐づくEventDateを入力するフォームを構築できて
         "radioselect",
     ]
     assert [field.field.choices for field in form.schedule_answer_fields()] == [
-        [(0, "×"), (1, "△"), (2, "○")],
-        [(0, "×"), (1, "△"), (2, "○")],
-        [(0, "×"), (1, "△"), (2, "○")],
+        [(2, "○"), (1, "△"), (0, "×")],
+        [(2, "○"), (1, "△"), (0, "×")],
+        [(2, "○"), (1, "△"), (0, "×")],
     ]
     assert [field.value() for field in form.schedule_answer_fields()] == [0, 2, 1]
 
@@ -124,8 +124,8 @@ def test_フォーム項目に不備があるとバリデーションが働く�
     # assert
     assert response.status_code == 200
     assert response.context["form"].errors == {
-        "name": ["このフィールドは必須です。"],
-        "eventdate_1": ["このフィールドは必須です。"],
+        "name": ["名前を入力してください"],
+        "eventdate_1": ["回答を選んでください"],
     }
     # データが登録されていないこと
     from apps.chousei.models import EventPerson, Schedule

@@ -88,14 +88,20 @@ def test_Eventに紐づくevent_date_answerを取得していること(client):
 
     # assert
     assert response.status_code == 200
-    assert response.context["event_date_answer_list"] == [
+    response.context["event_date_answer_list"] == [
         {
             "start_datetime": tokyo_datetime(2022, 1, 1, 15, 0),
-            "answer_list": ["×", "△"],
+            "answer_list": [
+                {"value": 0, "display": "×"},
+                {"value": 1, "display": "△"},
+            ],
         },
         {
             "start_datetime": tokyo_datetime(2022, 1, 2, 16, 0),
-            "answer_list": ["△", "○"],
+            "answer_list": [
+                {"value": 1, "display": "△"},
+                {"value": 2, "display": "○"},
+            ],
         },
         {
             "start_datetime": tokyo_datetime(2022, 1, 2, 17, 0),
