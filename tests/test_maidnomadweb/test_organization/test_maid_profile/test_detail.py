@@ -5,7 +5,7 @@ import pytest
 class Testメイドさん紹介詳細ページ:
     def test_メイドさんの名前と画像が表示されること(self, client):
         # arrange
-        from factories import MaidProfileFactory
+        from factories.maidlist import MaidProfileFactory
 
         MaidProfileFactory(
             code="maidchan",
@@ -26,7 +26,7 @@ class Testメイドさん紹介詳細ページ:
 
     def test_OG画像が設定されていない時はサムネイル画像が表示されること(self, client):
         # arrange
-        from factories import MaidProfileFactory
+        from factories.maidlist import MaidProfileFactory
 
         MaidProfileFactory(
             code="maidchan",
@@ -47,7 +47,7 @@ class Testメイドさん紹介詳細ページ:
 
     def test_OG画像もサムネイル画像も設定されていない時はメイン画像が表示されること(self, client):
         # arrange
-        from factories import MaidProfileFactory
+        from factories.maidlist import MaidProfileFactory
 
         MaidProfileFactory(
             code="maidchan",
@@ -66,7 +66,7 @@ class Testメイドさん紹介詳細ページ:
 
     def test_メイン画像がNullの時はサムネイル画像を表示すること(self, client):
         # arrange
-        from factories import MaidProfileFactory
+        from factories.maidlist import MaidProfileFactory
 
         MaidProfileFactory(
             code="maidchan",
@@ -89,7 +89,7 @@ class Testメイドさん紹介詳細ページ:
     def test_メイン画像もサムネイルもNullの時はNoImage画像を表示すること(self, client):
 
         # arrange
-        from factories import MaidProfileFactory
+        from factories.maidlist import MaidProfileFactory
 
         MaidProfileFactory(
             code="maidchan",
@@ -117,7 +117,7 @@ class Testメイドさん紹介詳細ページ:
     def test_非表示に設定されている時は404を返すこと(self, client, visible, expected_status_code):
 
         # arrange
-        from factories import MaidProfileFactory
+        from factories.maidlist import MaidProfileFactory
 
         MaidProfileFactory(
             code="maidchan",
@@ -152,7 +152,7 @@ class Testメイドさん紹介詳細ページ:
 </ul>
 """.strip()
 
-        from factories import MaidProfileFactory
+        from factories.maidlist import MaidProfileFactory
 
         MaidProfileFactory(code="maidchan", content=content)
 
@@ -165,7 +165,7 @@ class Testメイドさん紹介詳細ページ:
 
     def test_MarkDownの中に危険なHTMLがある場合はサニタイズすること(self, client):
         # arrange
-        from factories import MaidProfileFactory
+        from factories.maidlist import MaidProfileFactory
 
         MaidProfileFactory(code="maidchan", content="<script>")
 
@@ -178,7 +178,7 @@ class Testメイドさん紹介詳細ページ:
 
     def test_Descriptionが設定されている時はmetaとogpのdescriptionに設定されること(self, client):
         # arrange
-        from factories import MaidProfileFactory
+        from factories.maidlist import MaidProfileFactory
 
         MaidProfileFactory(code="maidchan", name="メイドちゃん", description="初めましてメイドちゃんです♡")
 
@@ -196,7 +196,7 @@ class Testメイドさん紹介詳細ページ:
 
     def test_Descriptionが設定されていない時はmetaとogpのdescriptionに紹介文が設定されること(self, client):
         # arrange
-        from factories import MaidProfileFactory
+        from factories.maidlist import MaidProfileFactory
 
         MaidProfileFactory(code="maidchan", name="メイドちゃん", description="")
 

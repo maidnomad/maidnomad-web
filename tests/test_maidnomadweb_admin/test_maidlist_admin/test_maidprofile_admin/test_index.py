@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 @pytest.fixture
 def index_soup(client_superuser_loggedin):
-    from factories import MaidProfileFactory
+    from factories.maidlist import MaidProfileFactory
 
     MaidProfileFactory(pk=101, code="maidchan", name="メイドちゃん", order=20, visible=True)
     MaidProfileFactory(pk=102, code="maidsan", name="メイドさん", order=10, visible=True)

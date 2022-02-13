@@ -5,7 +5,7 @@ import pytest
 class Testオーガナイザー紹介一覧ページ:
     def test_オーガナイザーがorder順に表示されること(self, client):
         # arrange
-        from factories import OrganizerProfileFactory
+        from factories.organizerlist import OrganizerProfileFactory
 
         OrganizerProfileFactory(
             code="org1",
@@ -51,7 +51,7 @@ class Testオーガナイザー紹介一覧ページ:
 
     def test_非表示のオーガナイザーは表示されないこと(self, client):
         # arrange
-        from factories import OrganizerProfileFactory
+        from factories.organizerlist import OrganizerProfileFactory
 
         OrganizerProfileFactory(
             code="org1",
@@ -82,7 +82,7 @@ class Testオーガナイザー紹介一覧ページ:
 
     def test_サムネイル画像なしの場合メイン画像が表示される(self, client):
         # arrange
-        from factories import OrganizerProfileFactory
+        from factories.organizerlist import OrganizerProfileFactory
 
         OrganizerProfileFactory(
             code="orgtaro",
@@ -107,7 +107,7 @@ class Testオーガナイザー紹介一覧ページ:
 
     def test_サムネイル画像もメイン画像もない時はnoimage画像が表示されること(self, client):
         # arrange
-        from factories import OrganizerProfileFactory
+        from factories.organizerlist import OrganizerProfileFactory
 
         OrganizerProfileFactory(
             code="orgtaro", name="オーガナイザー太郎", thumbnail_image=None, main_image=None

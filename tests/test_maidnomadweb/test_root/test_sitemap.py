@@ -52,7 +52,7 @@ def test_sitemap_djangoがメイドさんの更新日付に応じたレスポン
     # arrange
     settings.SITE_ROOT_URL = "https://example.com"
 
-    from factories import MaidProfileFactory
+    from factories.maidlist import MaidProfileFactory
 
     maidchan = MaidProfileFactory(
         code="maidchan",

@@ -6,7 +6,7 @@ class TestMaidProfile:
     def test_str(self):
         """__str__メソッドが期待通りの値を返すこと"""
 
-        from factories import MaidProfileFactory
+        from factories.maidlist import MaidProfileFactory
 
         maidchan = MaidProfileFactory(code="maidchan", name="メイドちゃん")
 
