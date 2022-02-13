@@ -1,3 +1,5 @@
+from unittest.mock import Mock, call
+
 import pytest
 from helper import tokyo_datetime
 
@@ -135,7 +137,7 @@ def test_フォーム項目に不備があるとバリデーションが働く�
 
 
 @pytest.mark.django_db
-def test_フォームに値を入力して登録するとデータが追加されること(client, mock_post_to_slack):
+def test_フォームに値を入力して登録するとデータが追加されること(client, mock_post_to_slack: Mock):
     # arrange
     from factories.chousei import (
         EventDateFactory,
@@ -197,19 +199,22 @@ def test_フォームに値を入力して登録するとデータが追加さ�
     # Slack通知の確認
     event_url = f"http://localhost:8000/chousei/{event1.key}"
     notify_message = f"さんかしゃ名前変更後 さんが <{event_url}|ほげほげ会議1> の予定を更新したよ。"
-    mock_post_to_slack.assert_any_call(
-        {
-            "channel": "@hogehogeuser",
-            "text": notify_message,
-        },
-        log_name="event_schedule_updated",
-        log_channel="@hogehogeuser",
-    )
-    mock_post_to_slack.assert_any_call(
-        {
-            "channel": "#somechannel",
-            "text": notify_message,
-        },
-        log_name="event_schedule_updated",
-        log_channel="#somechannel",
-    )
+    mock_post_to_slack.call_args_list
+    assert mock_post_to_slack.call_args_list == [
+        call(
+            {
+                "channel": "@hogehogeuser",
+                "text": notify_message,
+            },
+            log_name="event_schedule_updated",
+            log_channel="@hogehogeuser",
+        ),
+        call(
+            {
+                "channel": "#somechannel",
+                "text": notify_message,
+            },
+            log_name="event_schedule_updated",
+            log_channel="#somechannel",
+        ),
+    ]
