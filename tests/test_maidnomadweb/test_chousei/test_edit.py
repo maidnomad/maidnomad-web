@@ -137,8 +137,10 @@ def test_フォーム項目に不備があるとバリデーションが働く�
 
 
 @pytest.mark.django_db
-def test_フォームに値を入力して登録するとデータが追加されること(client, mock_post_to_slack: Mock):
+def test_フォームに値を入力して登録するとデータが追加されること(client, settings, mock_post_to_slack: Mock):
     # arrange
+    settings.SITE_ROOT_URL = "https://example.com"
+
     from factories.chousei import (
         EventDateFactory,
         EventFactory,
@@ -197,7 +199,7 @@ def test_フォームに値を入力して登録するとデータが追加さ�
         ("さんかしゃ名前変更後", tokyo_datetime(2022, 1, 2, 23, 0), 2),
     ]
     # Slack通知の確認
-    event_url = f"http://localhost:8000/chousei/{event1.key}"
+    event_url = f"https://example.com/chousei/{event1.key}"
     notify_message = f"さんかしゃ名前変更後 さんが <{event_url}|ほげほげ会議1> の予定を更新したよ。"
     mock_post_to_slack.call_args_list
     assert mock_post_to_slack.call_args_list == [
