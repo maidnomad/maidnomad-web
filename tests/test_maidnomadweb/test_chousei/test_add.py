@@ -105,11 +105,13 @@ def test_フォーム項目に不備があるとバリデーションが働く�
 
 
 @pytest.mark.django_db
-def test_フォームに値を入力して登録するとデータが追加されること(client):
+def test_フォームに値を入力して登録するとデータが追加されること(client, mock_post_to_slack):
     # arrange
     from factories.chousei import EventDateFactory, EventFactory
 
-    event1 = EventFactory(event_name="ほげほげ会議")
+    event1 = EventFactory(
+        event_name="ほげほげ会議", slack_notification_user="@hogehogeuser, #somechannel"
+    )
     event2 = EventFactory()
     # 日付は登録順に依存せず実際の日付順になることを確かめるためあえて逆順に登録する
     date_1223 = EventDateFactory(
@@ -155,3 +157,18 @@ def test_フォームに値を入力して登録するとデータが追加さ�
         ("さんかしゃ00", tokyo_datetime(2022, 1, 2, 16, 0), 1),
         ("さんかしゃ00", tokyo_datetime(2022, 1, 2, 23, 0), 2),
     ]
+    # Slack通知の確認
+    event_url = f"http://localhost:8000/chousei/{event1.key}"
+    notify_message = f"さんかしゃ00 さんが <{event_url}|ほげほげ会議> の予定を登録したよ。"
+    mock_post_to_slack.assert_any_call(
+        {
+            "channel": "@hogehogeuser",
+            "text": notify_message,
+        }
+    )
+    mock_post_to_slack.assert_any_call(
+        {
+            "channel": "#somechannel",
+            "text": notify_message,
+        }
+    )

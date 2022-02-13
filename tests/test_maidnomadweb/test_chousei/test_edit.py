@@ -108,7 +108,7 @@ def test_フォーム項目に不備があるとバリデーションが働く�
         EventPersonFactory,
     )
 
-    event1 = EventFactory(event_name="ほげほげ会議")
+    event1 = EventFactory(event_name="ほげほげ会議", slack_notification_user="@hogehogeuser")
     EventDateFactory(event=event1, start_datetime=tokyo_datetime(2022, 1, 1, 1, 0))
     event_person = EventPersonFactory(event=event1, name="名前なまえ")
 
@@ -135,7 +135,7 @@ def test_フォーム項目に不備があるとバリデーションが働く�
 
 
 @pytest.mark.django_db
-def test_フォームに値を入力して登録するとデータが追加されること(client):
+def test_フォームに値を入力して登録するとデータが追加されること(client, mock_post_to_slack):
     # arrange
     from factories.chousei import (
         EventDateFactory,
@@ -144,7 +144,9 @@ def test_フォームに値を入力して登録するとデータが追加さ�
         ScheduleFactory,
     )
 
-    event1 = EventFactory(event_name="ほげほげ会議1")
+    event1 = EventFactory(
+        event_name="ほげほげ会議1", slack_notification_user="@hogehogeuser, #somechannel"
+    )
     event_person = EventPersonFactory(
         event=event1,
         name="さんかしゃ変更前",
@@ -192,3 +194,18 @@ def test_フォームに値を入力して登録するとデータが追加さ�
         ("さんかしゃ名前変更後", tokyo_datetime(2022, 1, 2, 16, 0), 1),
         ("さんかしゃ名前変更後", tokyo_datetime(2022, 1, 2, 23, 0), 2),
     ]
+    # Slack通知の確認
+    event_url = f"http://localhost:8000/chousei/{event1.key}"
+    notify_message = f"さんかしゃ名前変更後 さんが <{event_url}|ほげほげ会議1> の予定を更新したよ。"
+    mock_post_to_slack.assert_any_call(
+        {
+            "channel": "@hogehogeuser",
+            "text": notify_message,
+        }
+    )
+    mock_post_to_slack.assert_any_call(
+        {
+            "channel": "#somechannel",
+            "text": notify_message,
+        }
+    )
