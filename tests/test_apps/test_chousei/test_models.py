@@ -11,4 +11,4 @@ class TestMaidProfile:
 
         event_date = EventDateFactory(start_datetime=tokyo_datetime(2022, 1, 2, 10, 15))
 
-        assert str(event_date) == "2022/01/02(日) 10:15"
+        assert str(event_date) == "2022/01/02 10:15"

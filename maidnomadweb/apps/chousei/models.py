@@ -48,7 +48,7 @@ class EventDate(Model):
     start_datetime = DateTimeField("開始日時")
 
     def __str__(self):
-        return timezone.localtime(self.start_datetime).strftime("%Y/%m/%d(%a) %H:%M")
+        return timezone.localtime(self.start_datetime).strftime("%Y/%m/%d %H:%M")
 
     class Meta:
         verbose_name = "イベント候補日"

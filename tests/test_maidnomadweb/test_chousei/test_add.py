@@ -53,9 +53,9 @@ def test_Eventに紐づくEventDateを入力するフォームを構築できて
     assert "person" not in response.context
     form = response.context["form"]
     assert [field.label for field in form.schedule_answer_fields()] == [
-        "2022/01/01(土) 01:00",
-        "2022/01/02(日) 16:00",
-        "2022/01/02(日) 23:00",
+        "2022/01/01 01:00",
+        "2022/01/02 16:00",
+        "2022/01/02 23:00",
     ]
     assert [field.name for field in form.schedule_answer_fields()] == [
         f"eventdate_{date_1101.pk}",

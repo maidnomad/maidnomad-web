@@ -55,7 +55,7 @@ def generate_chousei_form_class(
             choices=SCHEDULE_ANSWER_CHOISE,
             widget=forms.widgets.RadioSelect,
             label=timezone.localtime(event_date.start_datetime).strftime(
-                "%Y/%m/%d(%a) %H:%M"
+                "%Y/%m/%d %H:%M"
             ),
             error_messages={
                 "required": "回答を選んでください",
