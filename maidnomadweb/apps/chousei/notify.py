@@ -2,7 +2,7 @@ import json
 import logging
 from concurrent.futures import ThreadPoolExecutor
 from time import sleep
-from typing import Any, TypedDict
+from typing import TypedDict
 
 import requests
 from django.conf import settings
@@ -61,7 +61,6 @@ def _notify(message: str, to: To):
 
 
 def event_schedule_added(to: To, event_name: str, event_url: str, name: str):
-    to = To()
     message = (
         f"{name} さんが <{settings.SITE_ROOT_URL + event_url}|{event_name}> の予定を登録したよ。"
     )

@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Iterable, TypedDict
+from typing import Any, Iterable, Optional, TypedDict
 
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404, redirect, render
@@ -26,7 +26,7 @@ class EventDateAnswer(TypedDict):
     """イベント日付ごとの回答リスト"""
 
     start_datetime: datetime
-    answer_list: list[str]
+    answer_list: list[Optional[dict[str, Any]]]
 
 
 def _get_event_date_answer_list(
@@ -52,7 +52,7 @@ def _get_event_date_answer_list(
     for event_date in event_dates:
         # event_people と同じ順番で回答リストを作成
         answer_list = [
-            answer_dict.get((event_person.pk, event_date.pk), "")
+            answer_dict.get((event_person.pk, event_date.pk))
             for event_person in event_people
         ]
         event_date_answer = EventDateAnswer(

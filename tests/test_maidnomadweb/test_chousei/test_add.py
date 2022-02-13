@@ -80,9 +80,7 @@ def test_フォーム項目に不備があるとバリデーションが働く�
     from factories.chousei import EventDateFactory, EventFactory
 
     event1 = EventFactory(event_name="ほげほげ会議")
-    date_1101 = EventDateFactory(
-        event=event1, start_datetime=tokyo_datetime(2022, 1, 1, 1, 0)
-    )
+    EventDateFactory(event=event1, start_datetime=tokyo_datetime(2022, 1, 1, 1, 0))
 
     # act
     response = client.post(

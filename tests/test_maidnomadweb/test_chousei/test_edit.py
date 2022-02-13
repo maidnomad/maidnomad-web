@@ -109,9 +109,7 @@ def test_フォーム項目に不備があるとバリデーションが働く�
     )
 
     event1 = EventFactory(event_name="ほげほげ会議")
-    date_1101 = EventDateFactory(
-        event=event1, start_datetime=tokyo_datetime(2022, 1, 1, 1, 0)
-    )
+    EventDateFactory(event=event1, start_datetime=tokyo_datetime(2022, 1, 1, 1, 0))
     event_person = EventPersonFactory(event=event1, name="名前なまえ")
 
     # act
