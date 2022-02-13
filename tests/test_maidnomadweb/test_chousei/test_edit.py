@@ -201,11 +201,15 @@ def test_フォームに値を入力して登録するとデータが追加さ�
         {
             "channel": "@hogehogeuser",
             "text": notify_message,
-        }
+        },
+        log_name="event_schedule_updated",
+        log_channel="@hogehogeuser",
     )
     mock_post_to_slack.assert_any_call(
         {
             "channel": "#somechannel",
             "text": notify_message,
-        }
+        },
+        log_name="event_schedule_updated",
+        log_channel="#somechannel",
     )

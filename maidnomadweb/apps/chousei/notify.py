@@ -2,7 +2,7 @@ import json
 import logging
 from concurrent.futures import ThreadPoolExecutor
 from time import sleep
-from typing import TypedDict
+from typing import Any, TypedDict
 
 import requests
 from django.conf import settings
@@ -20,7 +20,9 @@ class To(TypedDict):
     slack_user: str
 
 
-def _post_to_slack(payload):  # pragma: nocover
+def _post_to_slack(
+    payload: dict[str, Any], log_name: str = "", log_channel: str = ""
+):  # pragma: nocover
     """Slack Incoming Webhook API を呼び出す"""
     url = settings.SLACK_WEEBHOOK_URL
     if url:
@@ -28,13 +30,15 @@ def _post_to_slack(payload):  # pragma: nocover
 
         def _do():
             try:
-                logger.info("post to slack")
+                logger.info("post to slack '%s' channel: %s", log_name, log_channel)
                 logger.debug("post %s, body %s", url, data)
                 # 現在は性能問題がないためblocking requestを使用する
                 # 接続が増えて性能問題が生じたらaiohttp化を検討する
-                requests.post(
+                response = requests.post(
                     settings.SLACK_WEEBHOOK_URL, data=data, timeout=10  # タイムアウトは10秒とする
                 )
+                logger.info("response.status_code: %s", response.status_code)
+                logger.debug("response.content: %s", response.content)
                 # 連続でリクエストしないよう1秒スリープする
                 sleep(1)
 
@@ -45,9 +49,9 @@ def _post_to_slack(payload):  # pragma: nocover
         executor.submit(_do)
 
 
-def _notify(message: str, to: To):
+def _notify(message: str, to: To, log_name: str = ""):
     """任意の通知先に情報を通知する"""
-    logger.debug("notify %s, to %s", message, to)
+    logger.debug("notify %s message: %s, to: %s", log_name, message, to)
     for user in to.get("slack_user", "").split(","):
         user = user.strip()
         if user:
@@ -56,6 +60,8 @@ def _notify(message: str, to: To):
                     "channel": user,
                     "text": message,
                 },
+                log_name=log_name,
+                log_channel=user,
             )
     # 現時点ではslack DMのみ対応しているが必要に応じて、以下に別の通知方法（メールなど）も追加する
 
@@ -64,11 +70,11 @@ def event_schedule_added(to: To, event_name: str, event_url: str, name: str):
     message = (
         f"{name} さんが <{settings.SITE_ROOT_URL + event_url}|{event_name}> の予定を登録したよ。"
     )
-    _notify(message, to)
+    _notify(message, to, log_name="event_schedule_added")
 
 
 def event_schedule_updated(to: To, event_name: str, event_url: str, name: str):
     message = (
         f"{name} さんが <{settings.SITE_ROOT_URL + event_url}|{event_name}> の予定を更新したよ。"
     )
-    _notify(message, to)
+    _notify(message, to, log_name="event_schedule_updated")
