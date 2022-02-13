@@ -29,7 +29,7 @@ padding: 0 0.5em;
 ユーザー名は表示名・フルネームとは異なるので注意してください。""",
         max_length=255,
         blank=True,
-        default=""
+        default="",
     )
     created_at = DateTimeField(auto_now_add=True)
     updated_at = DateTimeField(auto_now=True)

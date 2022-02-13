@@ -5,9 +5,9 @@ from django.http import HttpRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
+from . import notify
 from .forms import generate_chousei_form_class
 from .models import Event, EventDate, EventPerson, Schedule
-from . import notify
 
 
 def _get_event_info(key: str) -> tuple[Event, Iterable[EventDate]]:
@@ -93,12 +93,10 @@ def add(request: HttpRequest, key: str):
             form.instance.event = event
             form.save_chousei_schedules()
             notify.event_schedule_added(
-                to={
-                    "slack_user": event.slack_notification_user
-                },
+                to={"slack_user": event.slack_notification_user},
                 event_name=event.event_name,
                 event_url=reverse("chousei:view", kwargs={"key": event.key}),
-                name=form.cleaned_data["name"]
+                name=form.cleaned_data["name"],
             )
             return redirect("chousei:view", key)
     else:
@@ -123,12 +121,10 @@ def edit(request: HttpRequest, key: str, person_id: int):
         if form.is_valid():
             form.save_chousei_schedules()
             notify.event_schedule_updated(
-                to={
-                    "slack_user": event.slack_notification_user
-                },
+                to={"slack_user": event.slack_notification_user},
                 event_name=event.event_name,
                 event_url=reverse("chousei:view", kwargs={"key": event.key}),
-                name=form.cleaned_data["name"]
+                name=form.cleaned_data["name"],
             )
             return redirect("chousei:view", key)
 

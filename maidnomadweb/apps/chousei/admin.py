@@ -161,7 +161,14 @@ function copyUrl() {{
     readonly_fields = [
         "chousei_url_tag",
     ]
-    fields = ["chousei_url_tag", "event_name", "slack_notification_user", "memo", "default_time", "dates"]
+    fields = [
+        "chousei_url_tag",
+        "event_name",
+        "slack_notification_user",
+        "memo",
+        "default_time",
+        "dates",
+    ]
 
     def save_form(self, request, form: EventAdminForm, change):
         if not change:

@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('chousei', '0002_set_event_properties_20220212_1408'),
+        ("chousei", "0002_set_event_properties_20220212_1408"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='event',
-            name='slack_notification_user',
-            field=models.TextField(blank=True, default='', verbose_name='Slack 通知先ユーザー名'),
+            model_name="event",
+            name="slack_notification_user",
+            field=models.TextField(
+                blank=True, default="", verbose_name="Slack 通知先ユーザー名"
+            ),
         ),
     ]

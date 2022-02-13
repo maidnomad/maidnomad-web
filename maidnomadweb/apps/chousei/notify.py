@@ -1,5 +1,5 @@
-import logging
 import json
+import logging
 from typing import Any, TypedDict
 
 import requests
@@ -13,6 +13,7 @@ class To(TypedDict):
     slack_user: str
 
 def _post_to_slack(payload):
+
     """Slack Incoming Webhook API を呼び出す"""
     url = settings.SLACK_WEEBHOOK_URL
     if url:
@@ -25,7 +26,7 @@ def _post_to_slack(payload):
 
 def _notify(message: str, to: To):
     """任意の通知先に情報を通知する"""
-    logger.info("notify %s, to %s", message, to)
+    logger.debug("notify %s, to %s", message, to)
     for user in to.get("slack_user", "").split(","):
         user = user.strip()
         if user:
@@ -37,12 +38,17 @@ def _notify(message: str, to: To):
             )
     # 現時点ではslack DMのみ対応しているが必要に応じて、以下に別の通知方法（メールなど）も追加する
 
+
 def event_schedule_added(to: To, event_name: str, event_url: str, name: str):
     to = To()
-    message = f"{name} さんが <{event_url}|{event_name}> の予定を登録したよ。"
+    message = (
+        f"{name} さんが <{settings.SITE_ROOT_URL + event_url}|{event_name}> の予定を登録したよ。"
+    )
     _notify(message, to)
 
 
 def event_schedule_updated(to: To, event_name: str, event_url: str, name: str):
-    message = f"{name} さんが <{event_url}|{event_name}> の予定を更新したよ。"
+    message = (
+        f"{name} さんが <{settings.SITE_ROOT_URL + event_url}|{event_name}> の予定を更新したよ。"
+    )
     _notify(message, to)
