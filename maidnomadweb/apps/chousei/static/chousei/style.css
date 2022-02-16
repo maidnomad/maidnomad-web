@@ -5,7 +5,11 @@ body {
 header {
     background-color: rgb(147, 0, 0);
     color:rgb(242, 212, 212);
-    font-size: 2em;
+    font-size: 1.5em;
+}
+
+h1 {
+    font-size: 1.5em;
 }
 
 h1 a {
@@ -16,19 +20,19 @@ h1 a {
 /* clearfix */
 
 .clearfix:after {
-	content: "";
-	display: block;
-	clear: both;
+    content: "";
+    display: block;
+    clear: both;
 }
- 
+
 .clearfix:before {
     content: "";
-	display: block;
-	clear: both;
+    display: block;
+    clear: both;
 }
- 
+
 .clearfix {
-	display: block;
+    display: block;
 }
 
 /* django-form */
@@ -42,7 +46,6 @@ h1 a {
 /* main-content */
 
 #main-content {
-    width: 900px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -50,7 +53,6 @@ h1 a {
 /* 調整テーブル */
 
 #chousei-table {
-    width: 900px;
     margin-left: auto;
     margin-right: auto;
     font-size: 75%;
@@ -78,12 +80,6 @@ h1 a {
     vertical-align: top;
 }
 
-#chousei-table .chousei-date-column {
-    width: 115px;
-    max-width: 115px;
-    min-width: 50px;
-}
-
 #chousei-table td.chousei-date-value {
     font-weight: bold;
     background-color: rgb(246, 244, 244);
@@ -99,13 +95,13 @@ h1 a {
 
 #chousei-table .chousei-answer-name {
     font-weight: bold;
-	height: 30px;
+    height: 30px;
 }
 
 #chousei-table .chousei-answer-name a {
     text-decoration: none;
     display: flex;
-	align-items: baseline;
+    align-items: baseline;
     width: 100%;
     height: 100%;
 }
@@ -154,13 +150,12 @@ h1 a {
 /* 調整入力テーブル */
 
 #chousei-input {
-    width: 450px;
     margin-left: auto;
     margin-right: auto;
 }
 
 #chousei-input table {
-    border-collapse: collapse;;
+    border-collapse: collapse;
 }
 
 #chousei-input thead {
@@ -171,6 +166,10 @@ h1 a {
     border-width: 1px;
     border-style: solid;
     border-color: black;
+}
+
+#chousei-input .chousei-input-answer-column {
+    min-width: 250px;
 }
 
 #chousei-input th {
@@ -283,4 +282,45 @@ button.button:hover {
 }
 .answer-radio-group ul li label.answer-radio-unchecked:hover {
     background-color: white;
+}
+
+@media screen and (min-width: 600px) {
+
+    header {
+        font-size: 2em;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    /* 調整入力テーブル */
+
+    #chousei-input {
+        width: 450px;
+    }
+
+}
+
+@media screen and (min-width: 900px) {
+
+    /* main-content */
+
+    #main-content {
+        width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* 調整テーブル */
+
+    #chousei-table {
+        width: 900px;
+    }
+
+    #chousei-table .chousei-date-column {
+        width: 115px;
+        max-width: 115px;
+        min-width: 50px;
+    }
 }

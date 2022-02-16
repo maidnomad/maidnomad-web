@@ -58,16 +58,16 @@
         <thead>
             <tr>
                 <th>日時</th>
-                <th>回答</th>
+                <th class="chousei-input-answer-column">回答</th>
             </tr>
         </thead>
         <tbody>
             {% for field in form.schedule_answer_fields %}
             <tr>
-                <td>
+                <td class="chousei-input-date-column">
                     {{ field.field.start_datetime|date:"n/j(D) H:i" }}〜
                 </td>
-                <td>
+                <td class="chousei-input-answer-column">
                     <div class="answer-radio-group clearfix">
                         {{ field }}
                     </div>
