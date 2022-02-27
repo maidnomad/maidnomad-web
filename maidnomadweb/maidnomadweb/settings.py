@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "admin_ordering",
     "reversion",
     "import_export",
+    "apps.chousei",
     "apps.core",
     "apps.staticpage",
     "apps.stafflist",
@@ -173,6 +174,9 @@ if AWS_S3_ACCESS_KEY_ID and AWS_S3_SECRET_ACCESS_KEY:
     STATICFILES_STORAGE = "storages.backends.s3boto3.S3StaticStorage"
     DEFAULT_FILE_STORAGE = "apps.core.backends.MediaStorage"
 
+
+# Slack
+SLACK_WEEBHOOK_URL = environ.get("SLACK_WEEBHOOK_URL")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
