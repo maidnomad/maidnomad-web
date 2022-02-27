@@ -168,7 +168,7 @@ class StaffProfileViewSet(metaclass=ABCMeta):
         エスケープせずに出力しても安全です。
         """
 
-        content_html = markdown(content)
+        content_html = markdown(content, extensions=["nl2br"])
         # unsafe でレンダリングするのでHTMLをサニタイズする
         content_html_safe = bleach.clean(content_html, markdown_tags)
         return content_html_safe
