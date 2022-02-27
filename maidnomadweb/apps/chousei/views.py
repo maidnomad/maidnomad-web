@@ -1,9 +1,13 @@
+import re
 from datetime import datetime
 from typing import Any, Iterable, Optional, TypedDict
 
+import bleach
+from bleach_allowlist import markdown_tags
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from markdown import markdown
 
 from . import notify
 from .forms import generate_chousei_form_class
@@ -64,6 +68,19 @@ def _get_event_date_answer_list(
     return event_date_answer_list
 
 
+def _to_memo_html_safe(memo: str) -> str:
+    """プロフィールのコンテンツをHTMLに変換します。
+
+    この関数のレスポンスは危険なタグをサニタイズ済みのHTMLであり、
+    エスケープせずに出力しても安全です。
+    """
+
+    content_html = markdown(memo, extensions=['nl2br'])
+    # unsafe でレンダリングするのでHTMLをサニタイズする
+    content_html_safe = bleach.clean(content_html, markdown_tags)
+    return content_html_safe
+
+
 def view(request: HttpRequest, key: str):
     """イベント表示画面"""
     event, event_dates = _get_event_info(key)
@@ -72,6 +89,7 @@ def view(request: HttpRequest, key: str):
     event_date_answer_list = _get_event_date_answer_list(
         event_dates, event_people, schedules
     )
+    memo = _to_memo_html_safe(event.memo)
     return render(
         request,
         "chousei/view.html",
@@ -79,6 +97,7 @@ def view(request: HttpRequest, key: str):
             "event": event,
             "event_date_answer_list": event_date_answer_list,
             "event_people": event_people,
+            "memo": memo,
         },
     )
 
