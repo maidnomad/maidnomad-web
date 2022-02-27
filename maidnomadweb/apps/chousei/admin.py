@@ -24,7 +24,7 @@ class EventAdminForm(forms.ModelForm):
     default_time = forms.CharField(label="デフォルト時刻", required=False)
     dates = forms.CharField(
         label="候補日時",
-        widget=TextAreaWithDatepickerWidget(attrs={"cols": "20", "rows": "20"}),
+        widget=TextAreaWithDatepickerWidget(attrs={"cols": "16", "rows": "20"}),
         required=False,
     )
 
