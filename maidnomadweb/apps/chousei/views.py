@@ -1,4 +1,3 @@
-import re
 from datetime import datetime
 from typing import Any, Iterable, Optional, TypedDict
 
@@ -75,7 +74,7 @@ def _to_memo_html_safe(memo: str) -> str:
     エスケープせずに出力しても安全です。
     """
 
-    content_html = markdown(memo, extensions=['nl2br'])
+    content_html = markdown(memo, extensions=["nl2br"])
     # unsafe でレンダリングするのでHTMLをサニタイズする
     content_html_safe = bleach.clean(content_html, markdown_tags)
     return content_html_safe
