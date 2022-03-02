@@ -9,4 +9,4 @@ register = template.Library()
 def timestamp(path: str):
     """指定したパスのファイルが存在すればタイムスタンプを返します"""
     path = path.replace("..", ".")
-    return (Path(__file__).parent.parent.parent / path).stat().st_mtime
+    return (Path(__file__).parent.parent.parent.parent / path).stat().st_mtime
