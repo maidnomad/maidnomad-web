@@ -9,8 +9,8 @@
     <meta property="og:image:height" content="399" />
     <meta property="og:image" content="{% static 'maidnomad-logo.jpg' %}" />
     <meta property="og:title" content=" - メイドカフェでノマド会調整ツール" />
-    <meta name="description" content="{{ event.memo }}" />
-    <meta property="og:description" content="{{ event.memo }}" />
+    <meta name="description" content="{{ event.memo | removelines }}" />
+    <meta property="og:description" content="{{ event.memo | removelines }}" />
     <link rel="canonical" href="{% url 'chousei:view' event.key %}" />
     <meta property="og:url" content="{% url 'chousei:view' event.key %}" />
 {% endblock %}
@@ -54,7 +54,7 @@
             <tr>
                 <td></td>
                 {% for person in event_people %}
-                    <td class="chousei-answer-column">{{ person.comment }}</td>
+                    <td class="chousei-answer-column chousei-answer-memo">{{ person.comment }}</td>
                 {% endfor %}
             </tr>      
         </tfoot>

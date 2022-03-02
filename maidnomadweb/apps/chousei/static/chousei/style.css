@@ -147,6 +147,10 @@ h1 a {
         0px -.8px rgb(147, 0, 0);
 }
 
+#chousei-table .chousei-answer-memo {
+    white-space: break-spaces;
+}
+
 /* 調整入力テーブル */
 
 #chousei-input {
@@ -247,12 +251,11 @@ button.button:hover {
 }
 .answer-radio-group ul li {
     float: left;
-    display: flex;
     border-radius: 50%;
     overflow: hidden;
     border: 1px solid #b6b6b6;
     margin: 4px 20px;
-    padding: 0 0
+    padding: 0 0;
 }   
 
 .answer-radio-group ul li input {
@@ -265,10 +268,11 @@ button.button:hover {
     height: 26px;
     padding: 4px 4px;
     margin: 0px 0px;
-    font-family: cursive;
+    font-family: verdana, cursive;
     border-radius: 50%;
-    vertical-align: top;
+    vertical-align: middle;
     text-align: center;
+    display: table-cell;
 }
 
 .answer-radio-group ul li label.answer-radio-checked {
