@@ -54,7 +54,7 @@
             <tr>
                 <td></td>
                 {% for person in event_people %}
-                    <td class="chousei-answer-column">{{ person.comment | linebreaksbr }}</td>
+                    <td class="chousei-answer-column chousei-answer-memo">{{ person.comment }}</td>
                 {% endfor %}
             </tr>      
         </tfoot>

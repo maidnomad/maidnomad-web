@@ -147,6 +147,10 @@ h1 a {
         0px -.8px rgb(147, 0, 0);
 }
 
+#chouse-table .chousei-answer-memo {
+    white-space: break-spaces;
+}
+
 /* 調整入力テーブル */
 
 #chousei-input {
