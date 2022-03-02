@@ -8,7 +8,7 @@
     <title>メイドカフェでノマド会調整システム</title>
     {% endblock %}
     {% block stylesheets %}
-    <link rel="stylesheet" href="{% static 'chousei/style.css' %}" type="text/css"> 
+    <link rel="stylesheet" href="{% static 'chousei/style.css' %}?t={% timestamp 'apps/chousei/static/chousei/style.css' %}" type="text/css"> 
     {% endblock %}
     <link rel="icon" href="{% static 'maidnomad-icon-32x32.png' %}" sizes="32x32" />
     <link rel="icon" href="{% static 'maidnomad-icon-192x192.png' %}" sizes="192x192" />

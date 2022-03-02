@@ -97,7 +97,10 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "apps.core.context_processors.site_common_variables",
             ],
-            "builtins": ["apps.core.templatetags.markdowntag"],
+            "builtins": [
+                "apps.core.templatetags.markdowntag",
+                "apps.core.templatetags.timestamptag",
+            ],
         },
     },
 ]
