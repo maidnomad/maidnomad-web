@@ -100,6 +100,7 @@ TEMPLATES = [
             "builtins": [
                 "apps.core.templatetags.markdowntag",
                 "apps.core.templatetags.timestamptag",
+                "apps.core.templatetags.filters",
             ],
         },
     },
