@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, user-scalable=yes">
     {% block headtag_information %}
-    <title>メイドカフェでノマド会調整システム</title>
+    <title>調整システム by maidnomad</title>
     {% endblock %}
     {% block stylesheets %}
     <link rel="stylesheet" href="{% static 'chousei/style.css' %}?t={% timestamp 'apps/chousei/static/chousei/style.css' %}" type="text/css"> 
@@ -21,12 +21,16 @@
 
 <body>
 <header>
-メイドカフェでノマド会調整システム
+調整システム by maidnomad
 </header>
 
 <div id="main-content">
 {% block content %}{% endblock %}
 </div>
+
+<footer>
+このシステムは<a href="https://www.maid-cafe.work/">メイドカフェでノマド会</a>によって運営されています。
+</footer>
 
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
